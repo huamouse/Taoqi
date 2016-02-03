@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" ng-app="taoqiApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="description" content="天然气行业第三方交易平台">
+    <meta name="keywords" content="517淘气网，天然气交易平台，天然气物流，天然气行情">
+    <title>加入购物车</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <style>
+        .tableStyle1 td{
+            border-right:1px solid #ddd;
+        }
+        th {
+            font-weight:normal;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target="#help" ng-controller="baseController" ng-init="InitByCookie()" ng-cloak>
+    <div id="placeHolderHeader" ng-include src="headerHtml"></div>
+
+    <div class="container">
+        <div class="row shop_cart_nav">
+            <div class="col-md-4">
+                <div class="col-md-6 textRight clearPaddingRight">
+                    <div class="txt4"><span class="txt1">STEP</span> <span class="txt2">01</span></div>
+                    <div class="txt3 active">加入购物车</div>
+                </div>
+                <div class="col-md-6 clearPaddingLeft ">
+                    <img src="images/shopcart_step1_active.jpg" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="line3"><img src="images/line3.jpg" /></div>
+                <div class="col-md-6 textRight clearPaddingRight">
+                    <div class="txt4"><span class="txt1">STEP</span> <span class="txt2">02</span></div>
+                    <div class="txt3">填写订单信息</div>
+                </div>
+                <div class="col-md-6 clearPaddingLeft">
+                    <img src="images/shopcart_step2.jpg" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="line3"><img src="images/line3.jpg" /></div>
+                <div class="col-md-6 textRight clearPaddingRight">
+                    <div class="txt4"><span class="txt1">STEP</span> <span class="txt2">03</span></div>
+                    <div class="txt3">完成订单</div>
+                </div>
+                <div class="col-md-6 clearPaddingLeft">
+                    <img src="images/shopcart_step3.jpg" />
+                </div>
+            </div>
+        </div>
+
+        <div class="tableStyle1" ng-cloak>
+            <div class="table-responsive">
+                <!-- Table -->
+                <table class="table blueTable">
+                    <thead>
+                        <tr>
+                            <th width="670px">购物信息</th>
+                            <th>单价（元/吨）</th>
+                            <!--<th>数量（车）</th>-->
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ShopCartList">
+                            <td class="shopcart_list_style1">
+                                <div style="margin-left:14px;font-size:16px;margin-top:7px;">
+                                    <a href="/client.html?id={{item.C_ClientID}}">{{item.C_ClientName}}</a>
+                                    <span ng-bind-html="item.C_Ranking | rankingFilter"></span>
+                                </div>
+                                <div style="margin-left:14px;font-size:14px;margin-top:3px;">
+                                    联系人：<span ng-bind="item.SellerName" style=";color:#ff6400;"></span>
+                                    手机：<span ng-bind="item.SellerPhone" style="color:#ff6400;"></span>
+                                    QQ：<span ng-bind="item.SellerQQ" style="color:#0065e6;"></span>
+                                </div>
+                                   
+                                
+                                <div style="color: grey; margin-top: 2px;">
+                                    <span style="margin-left:14px;">
+                                        {{item.GasTypeName}}，{{item.GasVarietyName}}，{{item.C_GasSourceName}}，{{item.C_GasificationRate}}，{{item.C_CalorificValue}}，{{item.LiquidTemperatureName}}
+                                    </span>
+                                </div>
+                                <div style="color:grey;margin-top:2px;margin-bottom:7px;">
+                                    <span style="margin-left:14px;">
+                                        到岸城市：{{item.C_ProvinceName}}{{item.C_CityName}}
+                                    </span>
+                                    <span>日供能力：{{item.C_CarQuantity}}车</span>
+                                </div>
+                                    
+                                
+                            </td>
+
+                            <td class="textCenter price verticalMiddle" style="font-size:18px;font-weight:bold;" ng-bind="item.C_Price_Min"></td>
+                            <td class="textCenter verticalMiddle ">
+                                <div class="col-md-6">
+                                    <div class="btnRed" ng-click="Settlement(item.C_ProductAreaID)" style="padding:7px 3px;">下单</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btnRed" ng-click="RemoveShopCart(item.ID)" style="background-color: #eeecea; padding: 7px 3px; border: 1px solid #dcd9d5; color: black; ">删除</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--<div class=" textRight">
+            共 <span class="colorOrange">{{shopCartProductTotal}}</span> 件商品
+        </div>-->
+    </div>
+
+    <div id="placeHolderFooter" ng-include src="footerHtml"></div>
+
+    <script src="js/bootstrap.min.js" defer async="async"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/site.js"></script>
+
+    <!--<div class="modal fade" id="removemodal" tabindex="-1" role="dialog">
+        <div class="modal-header">
+            <h4>提示：确认删除吗？</h4>
+        </div>
+        <div class="modal-body">
+            <button class="account">确认</button>
+            <a class="close" data-dismiss="modal">取消</a>
+        </div>
+    </div>-->
+
+</body>
+</html>

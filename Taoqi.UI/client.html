@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" ng-app="taoqiApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="description" content="天然气行业第三方交易平台">
+    <meta name="keywords" content="517淘气网，天然气交易平台，天然气物流，天然气行情">
+    <title>公司综合评价</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <style>
+        .Div_starBar {
+            width: 148px;
+            height: 13px;
+            float: left;
+            margin-right: 5px;
+        }
+
+        .RB_clientEstimateTable{
+            height: auto!important;
+            padding-top: 0px;
+        }
+    </style>
+</head>
+
+<body ng-controller="baseController" ng-init="InitByCookie()">
+    <div id="placeHolderHeader" ng-include src="headerHtml"></div>
+
+    <div class="container" style="border: 2px solid #ececec;">
+        <div id="evaluation">
+            <div id="coinfo" ng-controller="ClientController" data-ng-init="DataInit()">
+                <div id="coninfotitle">
+                    公司信息
+                </div>
+                <div id="loading1"><img src="/images/loading.gif" /></div>
+                <div id="coinfodetail" ng-show="model.ID">
+
+                    <div id="coinfodleft" style="height:auto;">
+                        <div class="coinfodl1 coinfodl" style="margin-top: 4px;">
+                            <span class="coinfodl1">{{model.C_ClientName}}</span>
+                        </div>
+
+                        <div class="coinfodl7 coinfodl">
+                            <span class="coinfodll">联系地址：</span><span class="coinfodlr">{{model.FullAddress}}</span>
+                        </div>
+
+                        <div class="coinfodl7 coinfodl">
+                            <span class="coinfodll">运营资质：</span>
+                            <img src="images/cobuqu2.jpg" ng-if="model.C_Status == 2" />
+                            <span style="margin-left:30px;" ng-if="model.C_Status != 2">未认证</span>
+                        </div>
+
+                        <div class="coinfodl7 coinfodl">
+                            <span class="coinfodll">行业资质：</span>
+                            <img src="images/cobuqu2.jpg" ng-if="model.C_Status == 2 && (model.C_Attachment7 != null || model.C_Attachment8 != null ||model.C_Attachment9 != null ||model.C_Attachment10 != null)" />
+                            <span style="margin-left:30px;" ng-if="model.C_Status != 2 || (model.C_Attachment7 == null || model.C_Attachment8 == null ||model.C_Attachment9 == null ||model.C_Attachment10 == null)">未上传</span>
+                        </div>
+                    </div>
+                    <div id="coinfodright" style="height:auto;">
+                        <div id="clienteva">
+                            <div id="clienteva_C_EstimateLogistics" class="clienteva" ng-mouseleave="changeSelect('C_EstimateLogistics')" ng-mouseenter="changeSelect('C_EstimateLogistics')">
+                                <span class="clienteva1">物流到岸及时率：</span>
+                                <span class="clienteva2">{{model.C_EstimateLogisticsAvg}}</span>
+                                <span class="clienteva3">分</span>
+                                <span class="clienteva4">比同行平均水平</span>
+                                <span class="clienteva5">高{{model.More_C_EstimateLogisticsAvg}}</span>
+                            </div>
+                            <div id="clienteva_C_EstimateService" class="clienteva" ng-mouseleave="changeSelect('C_EstimateLogistics')" ng-mouseenter="changeSelect('C_EstimateService')">
+                                <span class="clienteva1">卖家的服务态度：</span>
+                                <span class="clienteva2">{{model.C_EstimateServiceAvg}}</span>
+                                <span class="clienteva3">分</span>
+                                <span class="clienteva4">比同行平均水平</span>
+                                <span class="clienteva5">高{{model.More_C_EstimateServiceAvg}}</span>
+                            </div>
+                            <div id="clienteva_C_EstimateQuality" class="clienteva" ng-mouseleave="changeSelect('C_EstimateLogistics')" ng-mouseenter="changeSelect('C_EstimateQuality')">
+                                <span class="clienteva1">气质与描述相符：</span>
+                                <span class="clienteva2">{{model.C_EstimateQualityAvg}}</span>
+                                <span class="clienteva3">分</span>
+                                <span class="clienteva4">比同行平均水平</span>
+                                <span class="clienteva5">高{{model.More_C_EstimateQualityAvg}}</span>
+                            </div>
+                        </div>
+                        <div id="evalevel">
+                            <div class="evalevelave">
+                                <img src="/images/Estimate/SStar2.jpg" ng-if="model.C_Estimate>=1" />
+                                <img src="/images/Estimate/SStar2.jpg" ng-if="model.C_Estimate>=2" />
+                                <img src="/images/Estimate/SStar2.jpg" ng-if="model.C_Estimate>=3" />
+                                <img src="/images/Estimate/SStar2.jpg" ng-if="model.C_Estimate>=4" />
+                                <img src="/images/Estimate/SStar2.jpg" ng-if="model.C_Estimate>=5" />
+                                <span class="ela2">{{model.C_Estimate}}</span>
+                                <span class="ela3">分</span>
+                                <span class="ela4">共</span>
+                                <span class="ela5">{{model.C_Estimate_Count}}</span>
+                                <span class="ela6">人</span>
+                            </div>
+                            <div class="evalevel5">
+                                <img class="el1" src="images/evalevel5.jpg" />
+                                <span class="el2">5分</span>
+                                <div class="Div_starBar">
+                                    <div class="el3" style="width:{{model.C_Estimate_5}}"></div>
+                                </div>
+                                <span class="el4">{{model.C_Estimate_5}}</span>
+                            </div>
+                            <div class="evalevel4">
+                                <img class="el1" src="images/evalevel4.jpg" />
+                                <span class="el2">4分</span>
+                                <div class="Div_starBar">
+                                    <div class="el3" style="width:{{model.C_Estimate_4}}"></div>
+                                </div>
+                                <span class="el4">{{model.C_Estimate_4}}</span>
+                            </div>
+                            <div class="evalevel3">
+                                <img class="el1" src="images/evalevel3.jpg" />
+                                <span class="el2">3分</span>
+                                <div class="Div_starBar">
+                                    <div class="el3" style="width:{{model.C_Estimate_3}}"></div>
+                                </div>
+                                <span class="el4">{{model.C_Estimate_3}}</span>
+                            </div>
+                            <div class="evalevel2">
+                                <img class="el1" src="images/evalevel2.jpg" />
+                                <span class="el2">2分</span>
+                                <div class="Div_starBar">
+                                    <div class="el3" style="width:{{model.C_Estimate_2}}"></div>
+                                </div>
+                                <span class="el4">{{model.C_Estimate_2}}</span>
+                            </div>
+                            <div class="evalevel1">
+                                <img class="el1" src="images/evalevel1.jpg" />
+                                <span class="el2">1分</span>
+                                <div class="Div_starBar">
+                                    <div class="el3" style="width:{{model.C_Estimate_1}}"></div>
+                                </div>
+                                <span class="el4">{{model.C_Estimate_1}}</span>
+                            </div>
+                        </div>
+                        <!--<div id="cobuqu">
+                            <div class="cobuqutitle">公司经营资质</div>
+                            <div class="cobuqucontent" ng-if="C_Status != 1 && C_Status != 3">
+
+                                <div class="div_cobuqucontent" ng-if="item.C_Attachment1 != null">
+                                    <span class="cobuqucontent1">营业执照：</span>
+                                    <a href="{{model.C_Attachment1_Url}}" target="_blank"><img class="cobuqucontent2" src="images/cobuqu2.jpg" /></a>
+                                </div>
+
+                                <div class="div_cobuqucontent" ng-if="item.C_Attachment2 != null">
+                                    <span class="cobuqucontent3">企业证件：</span>
+                                    <a href="{{model.C_Attachment2_Url}}" target="_blank"><img class="cobuqucontent2" src="images/cobuqu2.jpg" /></a>
+                                </div>
+
+                                <div class="div_cobuqucontent" ng-if="item.C_Attachment3 != null">
+                                    <span class="cobuqucontent3" style="width:114px;">组织机构代码证：</span>
+                                    <a href="{{model.C_Attachment3_Url}}" target="_blank"><img class="cobuqucontent2" src="images/cobuqu2.jpg" /></a>
+                                </div>
+
+                                <div class="div_cobuqucontent" ng-if="item.C_Attachment4 != null">
+                                    <span class="cobuqucontent3" style="width:84px;">税务登记证：</span>
+                                    <a href="{{model.C_Attachment4_Url}}" target="_blank"><img class="cobuqucontent2" src="images/cobuqu2.jpg" /></a>
+                                </div>
+
+                                <div class="div_cobuqucontent" ng-if="item.C_Attachment5 != null">
+                                    <span class="cobuqucontent3" style="width:84px;">开户许可证：</span>
+                                    <a href="{{model.C_Attachment5_Url}}" target="_blank"><img class="cobuqucontent2" src="images/cobuqu2.jpg" /></a>
+                                </div>
+
+                                <div class="div_cobuqucontent" ng-if="item.C_Attachment6 != null">
+                                    <span class="cobuqucontent3" style="width:84px;">法人身份证：</span>
+                                    <a href="{{model.C_Attachment6_Url}}" target="_blank"><img class="cobuqucontent2" src="images/cobuqu2.jpg" /></a>
+                                </div>
+
+                                <div class="div_cobuqucontent" ng-if="item.C_Attachment7 != null">
+                                    <span class="cobuqucontent3" style="width:210px;">燃气（危险化学品）经营许可证：</span>
+                                    <a href="{{model.C_Attachment7_Url}}" target="_blank"><img class="cobuqucontent2" src="images/cobuqu2.jpg" /></a>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="totaleva" ng-controller="ClientController">
+            <div id="tetitle">
+                全部评价
+            </div>
+            <table class="tetable" style="height: auto;">
+                <thead>
+                    <tr>
+                        <th class="tetab1">宝贝信息</th>
+                        <th class="tetab2">评价（{{dataSum}}）</th>
+                        <th class="tetab3">评价人</th>
+                    </tr>
+                </thead>
+                <tbody ng-init="GetOrderEstimateList()">
+                    <tr ng-repeat="item in AllEstimateList">
+                        <td style="border-bottom:1px groove #e4e2e2;">
+                            <div class="tetab11 RB_clientEstimateTable">
+                                {{item.GasTypeName}}：{{item.GasVarietyName}}；{{item.C_GasificationRate}}；{{item.C_GasSourceName}}；
+                            </div>
+                        </td>
+                        <td style="border-bottom:1px groove #e4e2e2;">
+                            <div class="tetab14 RB_clientEstimateTable">
+                                <div class="initialeva">
+                                    <span class="inevaleft">评价：<br /><span ng-bind="item.DATE_ENTERED | date:'MM-dd' "></span></span>
+                                    <span class="inevaright" ng-bind="item.C_EstimateContext"></span>
+                                </div>
+                                <!--<div class="additionaleva">
+            <span class="adevaleft">收货7天后追加：</span>
+            <span class="adevaright">发货速度很快，气也是大大的好！</span>
+        </div>-->
+                            </div>
+                        </td>
+                        <td class="tetab13" style="border-bottom:1px groove #e4e2e2;">
+                            <div class="item1" ng-bind="item.BuyerName"></div>
+                            <div class="item2">
+                                <img src="/images/Estimate/SStar2.jpg" ng-if="item.C_Ranking>=1" />
+                                <img src="/images/Estimate/SStar2.jpg" ng-if="item.C_Ranking>=2" />
+                                <img src="/images/Estimate/SStar2.jpg" ng-if="item.C_Ranking>=3" />
+                                <img src="/images/Estimate/SStar2.jpg" ng-if="item.C_Ranking>=4" />
+                                <img src="/images/Estimate/SStar2.jpg" ng-if="item.C_Ranking>=5" />
+                            </div>
+                        </td>
+                    </tr>
+                    <!--<tr>
+                        <td style="height:110px;border-bottom:1px groove #e4e2e2;">
+                            <div class="tetab11">
+                                LNG；内蒙；新圣；焦炉煤气；1450；江苏如东
+                            </div>
+                        </td>
+                        <td style="height:110px;border-bottom:1px groove #e4e2e2;">
+                            <div class="tetab12">
+                                发货速度很快，气还不错！发货速度很快，气还不错！<br />09-01
+                            </div>
+                        </td>
+                        <td class="tetab13" style="background-image:url(.//images/pjr.jpg);height:110px;border-bottom:1px groove #e4e2e2;"></td>
+                    </tr>
+                    <tr>
+                        <td style="height:110px;border-bottom:1px groove #e4e2e2;">
+                            <div class="tetab11">
+                                LNG；内蒙；新圣；焦炉煤气；1450；江苏如东
+                            </div>
+                        </td>
+                        <td style="height:110px;border-bottom:1px groove #e4e2e2;">
+                            <div class="tetab12">
+                                发货速度很快，气还不错！发货速度很快，气还不错！<br />09-01
+                            </div>
+                        </td>
+                        <td class="tetab13" style="background-image:url(.//images/pjr.jpg);height:110px;border-bottom:1px groove #e4e2e2;"></td>
+                    </tr>-->
+                </tbody>
+            </table>
+            <div id="loading2"><img src="/images/loading.gif" /></div>
+            <div>
+                <ul class="pagination">
+                    <li>
+                        <a href="#" ng-click="paging(1)">
+                            <span aria-hidden="true">首页</span>
+                        </a>
+                    </li>
+                    <li ng-class="{'disabled':currentPageIndex == 1}">
+                        <a href="#" aria-label="Previous" ng-click="search(-1,null,pageTotal)">
+                            <span aria-hidden="true">上一页</span>
+                        </a>
+                    </li>
+                    <li ng-repeat="item in pageList" ng-class="{'active':item == currentPageIndex}"><a href="#" ng-click="paging(item)">{{item}}</a></li>
+                    <li ng-class="{'disabled':currentPageIndex == pageTotal}">
+                        <a href="#" aria-label="Next" ng-click="search(1,null,pageTotal)">
+                            <span aria-hidden="true">下一页</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" ng-click="paging(pageTotal)">
+                            <span aria-hidden="true">末页</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="pagingTotal">共{{pageTotal}}页</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="placeHolderFooter" ng-include src="footerHtml"></div>
+
+    <script src="js/bootstrap.min.js" defer async="async"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/site.js"></script>
+</body>
+</html>

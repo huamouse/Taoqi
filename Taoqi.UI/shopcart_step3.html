@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" ng-app="taoqiApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="description" content="天然气行业第三方交易平台">
+    <meta name="keywords" content="517淘气网，天然气交易平台，天然气物流，天然气行情">
+    <title>完成订单</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js" defer async="async"></script>
+      <script src="js/respond.min.js" defer async="async"></script>
+    <![endif]-->
+</head>
+
+<body data-spy="scroll" data-target="#help" ng-controller="baseController" ng-init="InitByCookie()">
+    <div id="placeHolderHeader" ng-include src="headerHtml"></div>
+
+    <div class="container">
+        <div class="row shop_cart_nav">
+            <div class="col-md-4">
+                <div class="col-md-6 textRight clearPaddingRight">
+                    <div class="txt4"><span class="txt1">STEP</span> <span class="txt2">01</span></div>
+                    <div class="txt3">加入购物车</div>
+                </div>
+                <div class="col-md-6 clearPaddingLeft ">
+                    <img src="images/shopcart_step1.jpg" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="line3"><img src="images/line3.jpg" /></div>
+                <div class="col-md-6 textRight clearPaddingRight">
+                    <div class="txt4"><span class="txt1">STEP</span> <span class="txt2">02</span></div>
+                    <div class="txt3">填写订单信息</div>
+                </div>
+                <div class="col-md-6 clearPaddingLeft">
+                    <img src="images/shopcart_step2.jpg" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="line3"><img src="images/line3.jpg" /></div>
+                <div class="col-md-6 textRight clearPaddingRight">
+                    <div class="txt4"><span class="txt1">STEP</span> <span class="txt2">03</span></div>
+                    <div class="txt3 active">完成订单</div>
+                </div>
+                <div class="col-md-6 clearPaddingLeft">
+                    <img src="images/shopcart_step3_active.jpg" />
+                </div>
+            </div>
+        </div>
+
+        <div class="tableStyle1">
+            <div class="titleBar2">
+                <div class="txt2">收货地址</div>
+            </div>
+            <div class="borderStyle4 order_complete">
+
+                <img src="/images/Register/zccg_07.png" />
+                <span class="colorBlueLarge" style="margin-left:13px;">恭喜您，完成订单！</span>
+
+                <div class="txt1 colorDarkGray" style="margin-bottom:20px;">
+                    订单编号：<span id="sn"></span>
+                </div>
+
+                <div>
+                    <a href="/member/"><div class="btnGray">查看历史订单</div></a>
+                    <a href="/"><div class="btnRedNormal" style="margin-left:20px;">返回首页</div></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="placeHolderFooter" ng-include src="footerHtml"></div>
+
+    <script src="js/bootstrap.min.js" defer async="async"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/site.js"></script>
+    <script>
+        $("#sn").html(window.getQueryString("SN"));
+    </script>
+</body>
+</html>

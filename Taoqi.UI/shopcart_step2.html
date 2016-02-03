@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" ng-app="taoqiApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="description" content="天然气行业第三方交易平台">
+    <meta name="keywords" content="517淘气网，天然气交易平台，天然气物流，天然气行情">
+    <title>填写订单信息</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <style>
+        .form-control {
+            font-size:13px;
+            background: url(images/select.png) scroll right no-repeat;
+        }
+                select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+        }
+
+            select::-ms-expand {
+                display: none;
+            }
+    </style>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js" defer async="async"></script>
+      <script src="js/respond.min.js" defer async="async"></script>
+    <![endif]-->
+</head>
+
+<body data-spy="scroll" data-target="#help" ng-controller="baseController" ng-init="InitByCookie()" ng-cloak>
+    <div id="placeHolderHeader" ng-include src="headerHtml"></div>
+
+    <div class="container" ng-controller="clientAddressController">
+        <div class="row shop_cart_nav">
+            <div class="col-md-4">
+                <div class="col-md-6 textRight clearPaddingRight">
+                    <div class="txt4"><span class="txt1">STEP</span> <span class="txt2">01</span></div>
+                    <div class="txt3 ">加入购物车</div>
+                </div>
+                <div class="col-md-6 clearPaddingLeft ">
+                    <img src="images/shopcart_step1.jpg" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="line3"><img src="images/line3.jpg" /></div>
+                <div class="col-md-6 textRight clearPaddingRight">
+                    <div class="txt4"><span class="txt1">STEP</span> <span class="txt2">02</span></div>
+                    <div class="txt3 active">填写订单信息</div>
+                </div>
+                <div class="col-md-6 clearPaddingLeft">
+                    <img src="images/shopcart_step2_active.jpg" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="line3"><img src="images/line3.jpg" /></div>
+                <div class="col-md-6 textRight clearPaddingRight">
+                    <div class="txt4"><span class="txt1">STEP</span> <span class="txt2">03</span></div>
+                    <div class="txt3">完成订单</div>
+                </div>
+                <div class="col-md-6 clearPaddingLeft">
+                    <img src="images/shopcart_step3.jpg" />
+                </div>
+            </div>
+        </div>
+
+        <div class="tableStyle1">
+            <div class="titleBar2">
+                <div class="txt2">到岸地</div>
+
+            </div>
+            <div class="borderStyle4" style="margin-top:0px;margin-bottom:25px;padding:15px;">
+
+                <div class="table-responsive">
+                    <!-- Table -->
+                    <table class="table" style="border-top:1px solid #dcdcdc;" data-ng-init="getClientAddress()">
+                        <tbody>
+                            <tr ng-repeat="item in myClientAddress">
+                                <td height="35">
+                                    <label class="fontNormal">
+                                        <input type="checkbox" ng-change="cardAddressChange()" ng-model="item.IsChecked" style="width:15px;height:15px;" />
+                                        {{item.C_ContactName}}  &nbsp;{{item.C_StationShortName}} &nbsp; {{item.C_ProvinceName}} &nbsp; {{item.C_CityName}}&nbsp;  {{item.C_CountyName}} &nbsp; {{item.C_Address}} &nbsp; {{item.C_Tel}}
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a href="#" ng-click="showAll()" id="btnShowAll">显示全部到岸地</a>
+
+                <div class="btnRed" style="width:105px;padding:10px;margin-top:5px;" onclick="$('#divClientAddress').toggle();">使用新到岸地</div>
+
+                <div id="divClientAddress" style="display:none;">
+                    <h3>新到岸地</h3> <span class="colorRed">*</span><span class="colorGray">为必填项</span>
+                    <hr />
+                    <div class="form-horizontal" ng-form="add">
+                        <div class="row form-group">
+                            <label class="col-md-3 control-label"><span class="colorRed">*</span>到岸地址：</label>
+                            <div class="form-control col-md-4 dropdown">
+                                <div class="overflow" data-toggle="dropdown" data-target="#">
+                                    <span ng-if="entity.LandName" ng-bind="entity.LandName"></span>
+                                    <span ng-if="!entity.LandName" class="colorGray">请选择到岸地址</span>
+                                    <span class="dropDownRight2">
+                                    </span>
+                                </div>
+                                <div data-panel='plants' class="dropdown-menu deliveryPanel">
+                                    <ul class="nav nav-tabs">
+                                        <li ng-class="{active:tabLand===0}"><a data-toggle="tab" data-target="#" ng-click="getProvinces($event)">省份</a></li>
+                                        <li ng-class="{active:tabLand===1}"><a data-toggle="tab" data-target="#" ng-click="getCities($event)">城市</a></li>
+                                        <li ng-class="{active:tabLand===2}"><a data-toggle="tab" data-target="#" ng-click="getCounties($event)">县区</a></li>
+                                    </ul>
+                                    <ul class="nav nav-pills">
+                                        <li ng-repeat="item in baseData.Province" ng-if="tabLand === 0">
+                                            <a ng-click="provinceSelect($event, item)">{{item.C_ProvinceName}}</a>
+                                        </li>
+                                        <li ng-repeat="item in cities" ng-if="tabLand === 1">
+                                            <a ng-click="citySelect($event, item)">{{item.C_CityName}}</a>
+                                        </li>
+                                        <li ng-repeat="item in counties" ng-if="tabLand === 2">
+                                            <a ng-click="countySelect(item)">{{item.C_CountyName}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group" ng-class="{ 'has-error': add.address.$dirty && add.address.$invalid }">
+                            <label class="col-md-3 control-label"><span class="colorRed">*</span>详细地址：</label>
+                            <input id="address" type="text" name="address" class="form-control col-md-6" style="background-image:none;" ng-model="model.C_Address" maxlength="50" required />
+                            <div class="glyphicon glyphicon-ok form-glyphicon" ng-show="add.address.$dirty && add.address.$valid"></div>
+                            <div class="glyphicon glyphicon-remove form-glyphicon" ng-show="add.address.$dirty && add.address.$invalid"></div>
+                        </div>
+                        <div class="row form-group" style="margin-top:-0.7em;">
+                            <div class="col-md-8 col-md-offset-3">
+                                <input type="hidden" id="baiduPosition" ng-model="model.C_BaiduPosition" />
+                                <div class="icon icon_location"></div>
+                                <button data-toggle="modal" data-target="#modalMap" style="color: red;background-color:transparent;border:none;margin-left:-8px;" onclick="return false;">地图标注</button>
+                                <span class="colorGray">请标注准确地址位置，便于物流准确交接。</span>
+                            </div>
+                        </div>
+                        <div class="row form-group" ng-class="{ 'has-error': add.station.$dirty && add.station.$invalid }">
+                            <label class="col-md-3 control-label"><span class="colorRed">*</span>场站名称：</label>
+                            <input type="text" name="station" class="col-md-4 form-control" style="background-image:none" ng-model="model.C_StationShortName" required />
+                            <div class="glyphicon glyphicon-ok form-glyphicon" ng-show="add.station.$dirty && add.station.$valid"></div>
+                            <div class="glyphicon glyphicon-remove form-glyphicon" ng-show="add.station.$dirty && add.station.$invalid"></div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-3 control-label">场站类型：</label>
+                            <select class="form-control col-md-4" ng-model="model.C_UserType" style="padding-right:6px;" id="C_UserType"
+                                    ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.UserType">
+                                <option value="">不限</option>
+                            </select>
+                        </div>
+                        <div class="row form-group" ng-class="{ 'has-error': add.contact.$dirty && add.contact.$invalid }">
+                            <label class="col-md-3 control-label"><span class="colorRed">*</span>站内联系人：</label>
+                            <input type="text" name="contact" class="col-md-4 form-control" style="background-image:none;" ng-model="model.C_ContactName" required />
+                            <div class="glyphicon glyphicon-ok form-glyphicon" ng-show="add.contact.$dirty && add.contact.$valid"></div>
+                            <div class="glyphicon glyphicon-remove form-glyphicon" ng-show="add.contact.$dirty && add.contact.$invalid"></div>
+                        </div>
+                        <div class="row form-group" ng-class="{ 'has-error': add.phone.$dirty && add.phone.$invalid }">
+                            <label class="col-md-3 control-label"><span class="colorRed">*</span>手机：</label>
+                            <input type="text" name="phone" class="form-control col-md-4" style="background-image:none;" ng-model="model.C_Tel" maxlength="20" ng-pattern="/^1[3|5|7|8|]\d{9}$/" required />
+                            <div class="glyphicon glyphicon-ok form-glyphicon" ng-show="add.phone.$dirty && add.phone.$valid"></div>
+                            <div class="glyphicon glyphicon-remove form-glyphicon" ng-show="add.phone.$dirty && add.phone.$invalid"></div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-3 control-label">场站总罐容（立方）：</label>
+                            <input type="text" class="form-control col-md-4" style="background-image:none;" ng-model="model.C_StationCapacity" maxlength="6" />
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-3 control-label">LNG日供气量（公斤）：</label>
+                            <input type="text" class="form-control col-md-4" style="background-image:none;" ng-model="model.C_DailyConsumption1" maxlength="6" />
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-3 control-label">CNG日供气量（方）：</label>
+                            <input type="text" class="form-control col-md-4" style="background-image:none;" ng-model="model.C_DailyConsumption2" maxlength="6" />
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-offset-3 col-md-4">
+                                <div class="btnBlue_large" ng-click="addClientAddress('Cart')">确认添加</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tableStyle1">
+            <div class="titleBar2">
+                <div class="txt2">购物清单</div>
+            </div>
+            <div class="table-responsive">
+                <!-- Table -->
+                <table class="table blueTable">
+                    <thead>
+                        <tr>
+                            <th>购物信息</th>
+                            <th>收货地址</th>
+                            <th>单价<br />（元）</th>
+                            <th>数量<br />（车）</th>
+                            <th width="18%">到岸时间</th>
+                            <th width="6%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ParamList">
+                            <td class="shopcart_list_style1">
+                                <div>
+                                    <a href="/client.html?id={{item.Product.C_ClientID}}" onclick="return confirm('提示：确定离开此页面吗？数据不会保存。');">{{item.Product.C_ClientName}}</a>
+                                    <span ng-bind-html="item.Product.C_Ranking | rankingFilter"></span>
+                                    <p></p>
+                                </div>
+                                <div>
+                                    <span>气源类型：{{item.Product.GasTypeName}}</span>
+                                    <span>
+                                        气源地：{{item.Product.ParentProvinceName}}
+                                    </span>
+                                    <span>
+                                        工厂名称：{{item.Product.C_GasSourceName}}
+                                    </span>
+                                    <span>
+                                        品种：{{item.Product.GasVarietyName}}
+                                    </span><br />
+
+                                    <span>
+                                        气化率：{{item.Product.C_GasificationRate}}
+                                    </span>
+                                    <span>
+                                        主营区域：{{item.Product.C_ProvinceName}}{{item.Product.C_CityName}}
+                                    </span>
+                                    <span>日供：{{item.Product.C_CarQuantity}}车</span>
+                                </div>
+                            </td>
+                            <td class="textCenter">
+                                {{item.ClientAddressInfo.C_StationShortName}}<br />
+                                {{item.ClientAddressInfo.C_ProvinceName}}-{{item.ClientAddressInfo.C_CityName}}-{{item.ClientAddressInfo.C_CountyName}}<br />
+                                {{item.ClientAddressInfo.C_Address}}<br />
+                            </td>
+                            <td class="textCenter price" style="font-size:17px;" ng-bind="item.C_Price"></td>
+                            <td class="textCenter">
+                                <div class="shopCart_AddQuantity">
+                                    <div class="middle" ng-bind="item.C_Quantity"></div>
+                                    <div class="right" ng-click="addQuantity($index)">+</div>
+                                </div>
+                            </td>
+                            <td class="textCenter">
+                                <div class="input-group landTime date" onmouseover="setLandTimeePicker();">
+                                    <input class="form-control" style="background-image:none;" type="text" readonly="readonly" ng-model="item.C_ArriveTime" />
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="btnRed" ng-click="ParamListRemove($index)">删除</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="textRight">
+            <a href="/shopcart_step1.html" onclick="return confirm('提示：确定离开此页面吗？数据不会保存。');"><div class="btnGray">返回购物车</div></a>
+            <div class="btnRedNormal" style="margin-left:20px;" ng-click="addOrder()">提交订单</div>
+        </div>
+    </div>
+
+    <div id="placeHolderFooter" ng-include src="footerHtml"></div>
+
+    <script src="js/bootstrap.min.js" defer async="async"></script>
+    <script src="js/bootstrap-datetimepicker.js"></script>
+    <script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/site.js"></script>
+
+    <div class="modal fade" id="modalMap" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog container">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="mapTitle">地图标注</div>
+                    <div class="mapBody">
+                        <div id="allmap" style="height:500px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=wCp9mFd1bab0ygEVLnhdXAY7"></script>
+    <script type="text/javascript" src="/js/map.js"></script>
+
+    <script type="text/javascript">
+        function setLandTimeePicker() {
+            $('.landTime').datetimepicker({
+                language: 'zh-CN',
+                weekStart: 7,
+                //todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 0,
+                minView: 1, //最小选择小时
+                forceParse: 0,
+                pickerPosition: 'bottom-left',
+                format: 'yyyy-mm-dd hh:00',
+                initialDate: addDays(0),
+                startDate: addDays(0)
+            });
+        }
+    </script>
+</body>
+</html>

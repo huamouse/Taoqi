@@ -1,0 +1,253 @@
+﻿<style>
+    #navLinksLeft li select {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background: url(images/dropdown.png) scroll right no-repeat;
+    }
+
+        #navLinksLeft li select::-ms-expand {
+            display: none;
+        }
+
+        #plants a:hover {
+            color:white;
+            background-color:#ff6400;
+        }
+        #categoryList a:hover {
+            border-radius:0px;
+        }
+    .categoryDetails {
+        /*background-color:white;
+        opacity:0.9;*/
+    }
+
+    
+</style>
+
+<div class="header" data-ng-init="GetBaseData()">
+    <!--顶部工具栏-->
+    <div class="header_top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7" style="margin-top:2px;">
+                    <ul class="nav nav-pills" id="navLinksLeft">
+                        <li style="padding:8px 15px;color:#999999;">Hi，欢迎来淘气！</li>
+                        <li ng-hide="isLoginIn"><a href="#" onclick="toLoginPage();" class="colorOrange"><span class="colorOrange">请登录</span></a></li>
+                        <li ng-hide="isLoginIn"><a href="/member/account/register.aspx">注册账号</a></li>
+                        <li ng-hide="!isLoginIn"><a href="/Member/Users/PersonalInfo.aspx" ng-bind="UserInfo.RealName" class="colorOrange"></a></li>
+                        <!--<li ng-hide="!isLoginIn" ng-if="UserInfo.isCompany == 1">
+                            <select class="colorOrange headerSelect" ng-model="UserInfo.AccountID" style="padding-right:0px;" ng-change="getUserInfo()"
+                                    ng-options="item.ID as item.C_ClientName for item in Company"></select>
+                        </li>-->
+
+                        <li ng-hide="!isLoginIn" ng-if="UserInfo.isCompany == 1" class="topMenu hoverMenu">
+                            <label class="colorOrange headerSelect" data-ng-bind="UserInfo.CompanyName"></label>
+                            <div class="msg_panel dropdown-menu">
+                                <div class="msg_panel_body" ng-repeat="item in Company">
+                                    <a href="#" ng-class="{SelectedAccount:UserInfo.AccountID===item.ID}" ng-click="ChangeAccount(item)">{{item.C_ClientName}}</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li ng-hide="!isLoginIn" ng-if="UserInfo.isCompany == 0">
+                            <div class="colorOrange headerSelect">个人客户</div>
+                        </li>
+                        <li ng-hide="!isLoginIn" class="topMenu hoverMenu" ng-controller="MessageController" ng-init="GetUnreadMessage()">
+                            <a href="#">未读消息（<span ng-bind="messageList.length"></span>）</a>
+                            <div class="msg_panel dropdown-menu">
+                                <div class="msg_panel_head" ng-show="messageError">
+                                    <h2 class="msg_panel_title">未读新消息</h2>
+                                </div>
+                                <div>
+                                    <div class="msg_panel_body" ng-repeat="item in messageList | limitTo:5" ng-hide="messageError">
+                                        <a href="{{item.URL}}" ng-click="ReadMessage(item.ID)"><span data-ng-bind-html="item.Body" style="color:black;"></span></a>
+                                    </div>
+                                    <div class="msg_error" ng-show="messageError">
+                                        <p class="msg_error_notice">
+                                            <img width="23" height="14" alt="" src="/images/msg1.png" /><span>没有新消息了</span><img width="23" height="14" alt="" src="/images/msg2.png" />
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="msg_panel_foot">
+                                    <span class="J_Tmsg_Button_CheckAll_Wrap tmsg_button_check-all_wrap">
+                                        <a class="tmsg_button_check-all" href="/member/Message/">查看全部</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        <li ng-hide="!isLoginIn"><a href="/member/Users/Logout.aspx">退出</a></li>
+                    </ul>
+                </div>
+                <!--<img src="images/select3.png" style="position:absolute;top:10px;height:10px;"/>-->
+                <div class="col-md-5 hidden480" style="height:36px;">
+                    <ul class="nav nav-pills pull-right" id="navLinksRight">
+                        <li><a href="/member/"><div class="icon icon_my" style="margin-top:-3px;"></div>我的淘气网</a></li>
+
+                        <li class="topMenu hoverMenu" ng-if="UserInfo.isBuyer == 1">
+                            <a href="/member/Order/"><div class="icon icon_order" style="margin-top:-3px;"></div>我的订单</a>
+                        </li>
+                        <li class="topMenu hoverMenu" ng-if="UserInfo.isSeller == 1">
+                            <a href="/member/OrderSell/"><div class="icon icon_order" style="margin-top:-3px;"></div>已售订单</a>
+                        </li>
+
+                        <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=517517158&site=qq&menu=yes"><div class="icon icon_support" style="margin-top:-3px;"></div>在线客服</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--LOGO和搜索区域-->
+    <div class="header_middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="/"><img src="images/logo.png" class="logo" /></a><img src="images/description.png" class="small480" style="vertical-align:bottom;margin-bottom:11px;margin-left:10px;" />
+                </div>
+
+                <div class="col-md-6" style="float:right;margin-right:-51px;">
+                    <div class="search_bar">
+
+                        <input type="text" placeholder="公司名称 / 气源品种 / 气源地" class="search_box" ng-model="entity.keyword" />
+
+                        <div class="btn_search">
+                            <div class="icon icon_btn_search" id="btnSearch" ng-click="btnSearch_click()"></div>
+                        </div>
+
+                        <div class="shop_cart" data-ng-init="GetShopCart()">
+                            <a data-toggle="dropdown"><div class="icon icon_shopcart btnShopCart"></div></a>
+                            <span class="badge" ng-bind="ShopCartList.length"></span>
+
+                            <div class="dropdown-menu shopCartDetail" style="left:-82px;">
+                                <div>
+                                    我的购物车
+                                </div>
+                                <div class="scrollDiv1">
+                                    <ul class="nav marginTop5px">
+                                        <li ng-repeat="item in ShopCartList" class="silverFont_small">
+                                            {{item.GasTypeName}}，{{item.GasVarietyName}}，{{item.C_GasSourceName}}，{{item.C_GasificationRate}}，{{item.C_CalorificValue}}，{{item.LiquidTemperatureName}}
+                                            <br /><span class="colorOrange">{{item.C_Price_Min}}</span>元/吨
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="marginTop5px">共{{ShopCartList.length}}件商品</div>
+                                    <a ng-click="headerA_shopcart_step()" id="headerA_shopcart_step"><div class="btnRed_Large marginTop5px">去购物车了解详情</div></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="gift_ico hidden480">
+                            <a href="/mall.html"><div class="icon icon_gift"></div></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--导航菜单区域-->
+    <div class="navbar navbar-default header_bottom">
+        <div class="container">
+
+            <div class="left hidden480">
+
+                <div class="category" id="categoryMenu">
+                    <div class="icon icon_category"></div>
+                    <div class="categoty_txt">气源分类</div>
+                </div>
+                <div class="list-group" id="categoryList">
+                    <div class="hoverMenu">
+                        <a href="#" class="list-group-item" data-toggle="dropdown">
+                            <div class="icon icon_ico1"></div>
+                            LNG类型
+                        </a>
+                        <div class="dropdown-menu categoryDetails">
+                            <ul class="nav nav-pills">
+                                <li ng-repeat="item in baseData.GasVariety"><a href="product.html?GasVarietyID={{item.NAME}}">{{item.DISPLAY_NAME}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="hoverMenu">
+                        <a href="#" class="list-group-item " data-toggle="dropdown">
+                            <div class="icon icon_ico2"></div>
+                            液化工厂
+                        </a>
+                        <div id="plants" class="dropdown-menu categoryDetails" style="top:60px;width:440px;" data-panel='plants'>
+                            <ul class="nav nav-tabs">
+                                <li ng-repeat="item in regions" ng-class="{active:tabGasSource===$index}"><a ng-click="GetPlants(null, item)" data-toggle="tab" data-target="plantPanel" style="border-radius: 4px 4px 0 0;">{{item}}</a></li>
+                            </ul>
+                            <ul id="plantPanel" class="nav nav-pills">
+                                <li ng-repeat="item in plants" ng-if="baseLoaded"><a href="product.html?ProductID={{item.ID}}">{{item.C_GasSourceName}}</a></li>
+                                <li ng-if="!baseLoaded"><img src="/images/loading.gif" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="hoverMenu" id="wharf">
+                        <a href="#" class="list-group-item" data-toggle="dropdown">
+                            <div class="icon icon_ico3"></div>
+                            接收站码头
+                        </a>
+                        <div class="dropdown-menu categoryDetails" style="top:122px;width:440px;">
+                            <ul class="nav nav-pills">
+                                <li ng-repeat="item in baseData.Wharf" ng-if="baseLoaded"><a href="product.html?ProductID={{item.ID}}">{{item.C_GasSourceName}}</a></li>
+                                <li ng-if="!baseLoaded"><img src="/images/loading.gif" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="hoverMenu" id="qhl">
+                        <a href="#" class="list-group-item" data-toggle="dropdown">
+                            <div class="icon icon_ico4"></div>
+                            气化率
+                        </a>
+                        <div class="dropdown-menu categoryDetails" style="top:184px;">
+                            <ul class="nav nav-pills">
+                                <li ng-repeat="item in baseData.GasificationRate"><a href="product.html?GasificationRateRange={{item.NAME}}">{{item.DISPLAY_NAME}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="hoverMenu">
+                        <a href="#" class="list-group-item" data-toggle="dropdown">
+                            <div class="icon icon_ico5"></div>
+                            上游专区
+                        </a>
+                        <!--<div class="dropdown-menu categoryDetails" style="top:163px;">
+                            <ul class="nav nav-pills">
+                                <li ng-repeat="item in baseData.ClientType1"><a href="product.html?ClientType1={{item.ID}}">{{item.C_ClientName}}</a></li>
+                            </ul>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".menu" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <ul class="nav navbar-nav collapse navbar-collapse menu" id="menus">
+                    <li><a href="/index.html"><div id="ablank"></div>首页</a></li>
+                    <li><a href="/product.html">现货搜索</a></li>
+
+                    <li><a href="/quote.html">求购报价</a></li>
+                    <li><a href="/transit.html">在途气</a></li>
+                    <li><a href="/logistics.html">淘气物流</a></li>
+                    <!--<li><a href="/loan.html">淘气贷</a></li>-->
+                    <li><a href="/freequotation.html">行情</a></li>
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    initMenu();
+</script>

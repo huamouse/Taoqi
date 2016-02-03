@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" ng-app="taoqiApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="description" content="天然气行业第三方交易平台">
+    <meta name="keywords" content="517淘气网，天然气交易平台，天然气物流，天然气行情">
+    <title>现货搜索</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js" defer async="async"></script>
+      <script src="js/respond.min.js" defer async="async"></script>
+    <![endif]-->
+    <style>
+        select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: url(images/select.png) scroll right no-repeat;
+        }
+
+            select::-ms-expand {
+                display: none;
+            }
+            #searchBar a{
+                color:grey;
+            }
+            #searchBar a:hover {
+                color:white;
+                background-color:#ff6400;
+            }
+        .table > tbody > tr > td {
+            padding:4px;
+        }
+    </style>
+
+</head>
+
+<body ng-controller="baseController" ng-init="InitByCookie()">
+    <div id="placeHolderHeader" ng-include src="headerHtml"></div>
+
+    <div class="container" id="mainBody">
+        <!--卖气报价区域-->
+        <div class="tableStyle1">
+            <div class="titleBar">
+                <img class="titleBarimg" src="images/titleBarimg.png" />
+            </div>
+            <!--查询区域-->
+            <div id="searchBar" class="borderStyle6" ng-init="isSearch=true;">
+                <form class="form-inline">
+                    <div class="form-group" style="margin-top:0.5em;">
+                        <label class="overflow">到岸地</label>
+                        <div class="searchBar dropdown inline">
+                            <div class="landSearch overflow" data-toggle="dropdown" data-target="#">
+                                <span ng-if="entity.LandName" ng-bind="entity.LandName"></span>
+                                <span ng-if="!entity.LandName" class="colorGray">请选择到岸地</span>
+                                <span class="dropDownRight">
+                                    <img src="images/select.png" style="margin-top:-0.2em;margin-right:-0.28em;" />
+                                </span>
+                            </div>
+                            <div class="dropdown-menu panel" data-panel='plants'>
+                                <ul class="nav nav-tabs">
+                                    <li ng-class="{active:tabLand===0}"><a data-toggle="tab" data-target="#" ng-click="getProvinces($event)">省份</a></li>
+                                    <li ng-class="{active:tabLand===1}"><a data-toggle="tab" data-target="#" ng-click="getCities($event)">城市</a></li>
+                                </ul>
+                                <ul class="nav nav-pills">
+                                    <li ng-repeat="item in baseData.Province" ng-if="tabLand === 0 && baseLoaded">
+                                        <a ng-click="provinceSelect($event, item)">{{item.C_ProvinceName}}</a>
+                                    </li>
+                                    <li ng-repeat="item in cities" ng-if="tabLand === 1 && baseLoaded">
+                                        <a ng-click="citySelect2(item)">{{item.C_CityName}}</a>
+                                    </li>
+                                    <li ng-if="!baseLoaded"><img src="/images/loading.gif" /></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>类别</label>
+                        <select class="searchBar" ng-change="gasChange(true)" ng-model="entity.C_GasTypeID"
+                                ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.GasType">
+                            <option value="">不限</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>品种</label>
+                        <select class="searchBar" ng-change="gasChange(true)" ng-model="entity.C_GasVarietyID"
+                                ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.GasVariety">
+                            <option value="">不限</option>
+                        </select>
+                    </div>
+                    <div class="form-group" ng-show="entity.C_GasVarietyID">
+                        <label class="overflow">气源地</label>
+                        <div class="searchBar dropdown inline">
+                            <div class="deliverySearch overflow" data-toggle="dropdown" data-target="#">
+                                <span ng-if="entity.DeliveryName" ng-bind="entity.DeliveryName"></span>
+                                <span ng-if="!entity.DeliveryName" class="colorGray">请选择气源地</span>
+                                <span class="dropDownRight">
+                                    <span class="caret"></span>
+                                </span>
+                            </div>
+                            <div data-panel='plants' class="dropdown-menu deliveryPanel" ng-if="entity.C_GasVarietyID != '2'">
+                                <ul class="nav nav-tabs">
+                                    <li ng-repeat="item in regions" ng-class="{active:tabGasSource===$index}"><a ng-click="GetPlants($event, item)" data-toggle="tab" data-target="#">{{item}}</a></li>
+                                </ul>
+                                <ul class="nav nav-pills">
+                                    <li ng-repeat="item in plants"><a ng-click="plantSelect(item)">{{item.C_GasSourceName}}</a></li>
+                                    <li><a ng-click="plantSelect()"><span class="colorRed">不限</span></a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown-menu deliveryPanel" ng-if="entity.C_GasVarietyID === '2'">
+                                <ul class="nav nav-pills">
+                                    <li ng-repeat="item in baseData.Wharf"><a ng-click="plantSelect(item)">{{item.C_GasSourceName}}</a></li>
+                                    <li><a ng-click="plantSelect()"><span class="colorRed">不限</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>气化率</label>
+                        <select class="searchBar" ng-change="search()" ng-model="entity.GasificationRateRange"
+                                ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.GasificationRate">
+                            <option value="">不限</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>热值</label>
+                        <select class="searchBar" ng-change="search()" ng-model="entity.CalorificValueRange"
+                                ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.CalorificValue">
+                            <option value="">不限</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>液温</label>
+                        <select class="searchBar" ng-change="search()" ng-model="entity.C_LiquidTemperature"
+                                ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.LiquidTemperature">
+                            <option value="">不限</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btnOrange" ng-click="cancelSearch()">清除选择</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-responsive" ng-controller="productController" ng-init="AddressSearch()">
+                <table class="table blueTable addright" id="pdd">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" style="width:150px;">公司名称</th>
+                            <th rowspan="2" style="width:100px;">卖家级别</th>
+                            <th rowspan="2">类型</th>
+                            <th rowspan="2">品种</th>
+                            <th rowspan="2">气源工厂</th>
+                            <th rowspan="2">气化率</th>
+                            <th rowspan="2">热值</th>
+                            <th rowspan="2">液温</th>
+                            <th colspan="2">主营区域</th>
+                            <th rowspan="2" ng-click="search(null,'C_Price_Min')" class="hand">
+                                到岸价
+                                <img src="images/grid_arrow_Down.jpg" ng-if="orderBy=='C_Price_Min' && orderDirection=='desc'" />
+                                <img src="images/grid_arrow_Up.jpg" ng-if="orderBy=='C_Price_Min' && orderDirection=='asc'" />
+                                <img src="images/grid_arrow_Normal.jpg" ng-if="orderBy!='C_Price_Min'" />
+                            </th>
+                            <th rowspan="2" ng-click="search(null,'C_CarQuantity')" class="hand" style="width:90px;">
+                                日供（车）
+                                <img src="images/grid_arrow_Down.jpg" ng-if="orderBy=='C_CarQuantity' && orderDirection=='desc'" />
+                                <img src="images/grid_arrow_Up.jpg" ng-if="orderBy=='C_CarQuantity' && orderDirection=='asc'" />
+                                <img src="images/grid_arrow_Normal.jpg" ng-if="orderBy!='C_CarQuantity'" />
+                            </th>
+                            <th rowspan="2" ng-click="search(null,'DATE_ENTERED')" class="hand">
+                                上传时间
+                                <img src="images/grid_arrow_Down.jpg" ng-if="orderBy=='DATE_ENTERED' && orderDirection=='desc'" />
+                                <img src="images/grid_arrow_Up.jpg" ng-if="orderBy=='DATE_ENTERED' && orderDirection=='asc'" />
+                                <img src="images/grid_arrow_Normal.jpg" ng-if="orderBy!='DATE_ENTERED'" />
+                            </th>
+                            <th rowspan="2">下单</th>
+                        </tr>
+                        <tr>
+                            <th>省</th>
+                            <th>市</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ProductSellList">
+                            <td style="text-align:center;"><a href="/client.html?id={{item.SellerClientID}}" ng-bind="item.C_ClientName"></a></td>
+                            <td class="textCenter" ng-bind-html="item.C_Ranking | rankingFilter"></td>
+                            <td class="textCenter" ng-bind="item.GasTypeName"></td>
+                            <td class="textCenter" ng-bind="item.GasVarietyName"></td>
+                            <td class="textCenter" ng-bind="item.C_GasSourceName"></td>
+                            <td class="textCenter" ng-bind="item.C_GasificationRate"></td>
+                            <td class="textCenter" ng-bind="item.C_CalorificValue"></td>
+                            <td class="textCenter" ng-bind="item.LiquidTemperatureName"></td>
+                            <td class="textCenter" ng-bind="item.C_ProvinceName"></td>
+                            <td class="textCenter" ng-bind="item.C_CityName"></td>
+                            <td class="textCenter price" ng-bind="item.C_Price_Min"></td>
+                            <td class="textCenter" ng-bind="item.C_CarQuantity"></td>
+                            <td class="textCenter silverFont" ng-bind="item.DATE_ENTERED | date:'yyyy-MM-dd HH:mm' "></td>
+                            <td class="textCenter"><div class="btnRed" data-toggle="modal" ng-click="AddShopCart($index)">放入购物车</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="loading"><img src="/images/loading.gif" /></div>
+                <div>
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" ng-click="paging(1)">
+                                <span aria-hidden="true">首页</span>
+                            </a>
+                        </li>
+                        <li ng-class="{'disabled':currentPageIndex == 1}">
+                            <a href="#" aria-label="Previous" ng-click="search(-1,null,pageTotal)">
+                                <span aria-hidden="true">上一页</span>
+                            </a>
+                        </li>
+                        <li ng-repeat="item in pageList" ng-class="{'active':item == currentPageIndex}"><a href="#" ng-click="paging(item)">{{item}}</a></li>
+                        <li ng-class="{'disabled':currentPageIndex == pageTotal}">
+                            <a href="#" aria-label="Next" ng-click="search(1,null,pageTotal)">
+                                <span aria-hidden="true">下一页</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="paging(pageTotal)">
+                                <span aria-hidden="true">末页</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="pagingTotal">共{{pageTotal}}页</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="placeHolderFooter" ng-include src="footerHtml"></div>
+
+    <script src="js/bootstrap.min.js" defer async="async"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/site.js"></script>
+
+    <div class="modal fade" id="modalShopCart" tabindex="-1" role="dialog">
+        <div class="modal-header">
+            <img style="margin-left:55px;margin-top:10px;width:50px" src="images/ForgetPassword/banner_login_07.png"/>
+            <h4>商品成功加入购物车！</h4>
+        </div>
+        <div class="modal-body">
+            <button class="account" onclick="window.location.href = 'shopcart_step1.html'" >了解详情</button>
+            <a class="close" data-dismiss="modal" href="javascript:history.go(-1);">继续购物</a>
+        </div>
+    </div>
+</body>
+</html>

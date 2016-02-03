@@ -1,0 +1,731 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" ng-app="taoqiApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="description" content="天然气行业第三方交易平台，专业的天然气LNG网上交易平台，提供各气源地，气质类型和贸易商的LNG商品，同时支持线上支付和线下转账支付">
+    <meta name="keywords" content="517淘气网，天然气交易平台，天然气物流，天然气行情">
+    <title>517淘气网</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <script src="http://siteapp.baidu.com/static/webappservice/uaredirect.js" type="text/javascript"></script>
+    <script type="text/javascript">uaredirect("mobile.html")</script>
+    <script src="js/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+        <script>
+        window.location= "nosupport.html";
+        </script>
+    <![endif]-->
+    <style>
+        select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: url(images/select.png) scroll right no-repeat;
+        }
+
+            select::-ms-expand {
+                display: none;
+            }
+
+        #quoteModal .col-md-4, .col-md-5, .col-md-7, .col-md-1 {
+            padding-left: 0;
+        }
+
+        .form-control {
+            background: url(images/select.png) scroll right no-repeat;
+            font-size: 13px;
+        }
+
+        .gasInformation {
+            margin-right: 4px;
+        }
+
+        #quoteModal th {
+            font-weight: normal;
+        }
+
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            color: grey;
+        }
+
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: grey;
+        }
+
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: grey;
+        }
+
+        :-ms-input-placeholder { /* Internet Explorer 10+ */
+            color: grey;
+        }
+
+        .tableStyle1 tbody td {
+            padding-left: 1px !important;
+            padding-right: 1px !important;
+        }
+
+        #loginAfterAS a {
+            padding-left: 16px;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 17px;
+            padding-top: 18px;
+            box-shadow: none;
+            background-color: rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+
+<body ng-controller="baseController" ng-init="InitByCookie()">
+    <div id="placeHolderHeader" ng-include src="headerHtml"></div>
+
+    <div id="mainBody">
+        <div class="container hidden480" id="category">
+            <div class="left">
+            </div>
+            <!-- 快速登录区域 -->
+            <div class="right">
+                <div id="carousel-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators" style="bottom:5px;">
+                        <li data-target="#carousel-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-generic" data-slide-to="2"></li>
+                        <li data-target="#carousel-generic" data-slide-to="3"></li>
+                        <li data-target="#carousel-generic" data-slide-to="4"></li>
+                        <li data-target="#carousel-generic" data-slide-to="5"></li>
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active banner1"></div>
+                        <div class="item banner2"></div>
+                        <div class="item banner3"></div>
+                        <div class="item banner4"></div>
+                        <div class="item banner5"></div>
+                        <div class="item banner6"></div>
+                    </div>
+
+                    <div class="login" id="loginFrm" ng-show="baseLoaded && !isLoginIn">
+                        <form method="POST" action="/member/Users/Login.aspx?Redirect=~/../" id="loginForm">
+                            <div class="form-group login_title">
+                                会员登录
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="txtUSER_NAME" name="txtUSER_NAME" class="form-control" placeholder="手机号">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" id="txtPASSWORD" name="txtPASSWORD" class="form-control" placeholder="密码">
+                            </div>
+                            <div class="form-group">
+                                <a href="/member/Users/ForgetPassword.aspx?from=/index.html"><span class="colorOrange">忘记密码？</span></a>
+                            </div>
+                            <div class="form-group">
+                                <div class="btn" id="btnLogin">立即登录</div>
+                                <a href="/member/account/register.aspx">
+                                    <div class="btn" id="btnRegister">免费注册</div>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="loginAfterAS" ng-show="baseLoaded && isLoginIn">
+                        <a class="btn btn-primary btn-lg active quote" href="/member/Quote/edit.aspx" ng-if="UserInfo.isBuyer == 1"> 发&nbsp;布<br />求&nbsp;购</a>
+                        <a class="btn btn-primary btn-lg active productArea" href="/member/ProductSell/edit.aspx" ng-if="UserInfo.isSeller == 1"> 发&nbsp;布<br />气&nbsp;源</a>
+                        <a class="btn btn-primary btn-lg active inTransit" href="/member/TransitSell/edit.aspx" ng-if="UserInfo.isSeller == 1" style="padding-left:11px;"> &nbsp;发&nbsp;布<br />在途气</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--淘气助手区域-->
+        <div class="container">
+            <div class="row" id="assistant">
+                <img class="tqzsimg" src="images/home-1_23.png" />
+                <div class="right">
+                    <div class="row" style="margin-right:0;">
+                        <div class="bannerPlus col-md-8" style="margin-left:30px;">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-2 textRight" style="margin-top: 2px;">到岸地</div>
+                                        <div class="col-md-4 clearPaddingLeft">
+                                            <div class="delivery dropdown">
+                                                <div class="deliveryBorder" data-toggle="dropdown" data-target="#">
+                                                    <span ng-if="entity.LandName" ng-bind="entity.LandName"></span>
+                                                    <span ng-if="!entity.LandName" class="colorGray">请选择到岸地</span>
+                                                    <span class="btn floatRight">
+                                                        <!--<span class="caret"></span>-->
+                                                        <img src="images/select.png" style="margin-top:-0.3em;margin-right:-0.28em;" />
+                                                    </span>
+                                                </div>
+                                                <div id="land" class="dropdown-menu panel" data-panel='plants'>
+                                                    <ul class="nav nav-tabs" style="margin-top: 8px;">
+                                                        <li ng-class="{active:tabLand===0}"><a data-toggle="tab" data-target="#" ng-click="getProvinces($event)">省份</a></li>
+                                                        <li ng-class="{active:tabLand===1}"><a data-toggle="tab" data-target="#" ng-click="getCities($event)">城市</a></li>
+                                                    </ul>
+                                                    <ul class="nav nav-pills">
+                                                        <li ng-repeat="item in baseData.Province" ng-if="tabLand === 0">
+                                                            <a ng-click="provinceSelect($event, item)">{{item.C_ProvinceName}}</a>
+                                                        </li>
+                                                        <li ng-repeat="item in cities" ng-if="tabLand === 1">
+                                                            <a ng-click="citySelect2(item)">{{item.C_CityName}}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2 textRight" style="margin-top: 2px;padding-left:11px;">气源品种</div>
+                                        <div class="col-md-4 clearPaddingLeft" style="padding-right: 0px;">
+                                            <select id="select1" ng-change="selectChanged_color('select1')" class="selectInitColor" ng-model="entity.C_GasVarietyID"
+                                                    ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.GasVariety">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 textRight" style="margin-top: 2px;">气化率</div>
+                                        <div class="col-md-4 clearPaddingLeft">
+                                            <select id="select2" ng-change="selectChanged_color('select2')" class="selectInitColor" ng-model="entity.GasificationRateRange"
+                                                    ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.GasificationRate">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2 textRight" style="margin-top: 2px;padding-left:11px;">用户类型</div>
+                                        <div class="col-md-4 clearPaddingLeft" style="padding-right: 0px;">
+                                            <select id="select3" ng-change="selectChanged_color('select3')" class="selectInitColor" ng-model="entity.C_UserType"
+                                                    ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.UserType">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 textCenter">
+                                    <img src="images/search2.jpg" id="btnAssistant" ng-click="btnAssistantClick()" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 hidden480" style="margin-left:10px;">
+                            <div class="row qqChat" style="margin-left:-27px;">
+                                <div class="qqTxt1 colorOrange textCenter">QQ：517517158</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-4 qqTxt2 bgRed textCenter" style="padding-left:11px;">
+                                    <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=517517158&amp;site=qq&amp;menu=yes" target="_blank">在线客服</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <!--现货搜索平台-->
+                    <div class="tableStyle1" ng-controller="productController" style="min-height: 457px;">
+                        <div class="title">
+                            <div class="icon icon_ico8"></div>
+                            现货搜索平台
+                            <a href="product.html">
+                                <div class="more">
+                                    <div class="icon icon_more"></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" data-ng-init="GetProductListTop()">
+                                <thead>
+                                    <tr>
+                                        <th>公司名称</th>
+                                        <th>气源类型</th>
+                                        <th>品种</th>
+                                        <th>气源地</th>
+                                        <th>气化率</th>
+                                        <th>热值</th>
+                                        <th>液温</th>
+                                        <th>经营区域</th>
+                                        <th>到岸价格</th>
+                                        <th>日供（车）</th>
+                                        <th class="width50" style="width:52px;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in ProductList" style="height: 45px;">
+                                        <td class="textCenter"><a href="/client.html?id={{item.SellerClientID}}" ng-bind="item.C_ClientName"></a></td>
+                                        <td class="textCenter" ng-bind="item.GasTypeName"></td>
+                                        <td class="textCenter" ng-bind="item.GasVarietyName"></td>
+                                        <td class="textCenter" ng-bind="item.C_GasSourceName"></td>
+                                        <td class="textCenter" ng-bind="item.C_GasificationRate"></td>
+                                        <td class="textCenter" ng-bind="item.C_CalorificValue"></td>
+                                        <td class="textCenter" ng-bind="item.LiquidTemperatureName"></td>
+                                        <td class="textCenter">
+                                            {{item.Province1}}<br />
+                                            {{item.Province2}}
+                                        </td>
+                                        <td class="textCenter price">
+                                            <span id="tpl">{{item.Province1PriceRange}}</span><br />
+                                            <span id="tpr" ng-if="item.Province2PriceRange!=''">{{item.Province2PriceRange}}</span>
+                                        </td>
+                                        <td class="textCenter">
+                                            {{item.Province1TotalQuantity}}<br />
+                                            <span ng-if="item.Province2!=''">{{item.Province2TotalQuantity}}</span><!--如果没有主营区域，则不显示0数量。-->
+                                        </td>
+                                        <td class="textCenter">
+                                            <a href="product.html?ClientID={{item.SellerClientID}}&ProductID={{item.C_ProductID}}">
+                                                <div class="xqan">详情</div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--买气报价区域-->
+                    <div class="tableStyle1" ng-controller="quoteController">
+                        <div class="title">
+                            <div class="icon icon_ico9"></div>
+                            求购报价平台
+                            <a href="quote.html">
+                                <div class="more">
+                                    <div class="icon icon_more"></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="table-responsive" style="overflow-x: visible;">
+                            <table class="table" data-ng-init="getQuoteListTop()">
+                                <thead>
+                                    <tr>
+                                        <th style="width:80px;">到岸地点</th>
+                                        <th class="">求购内容</th>
+                                        <th class="">发布时间</th>
+                                        <th>到岸时间</th>
+                                        <th>报价截止</th>
+                                        <th class="width50">交易状态</th>
+                                        <th class="width50">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in QuoteList" class="hoverMenu" id="a" style="height: 45px;">
+                                        <td class="textCenter">
+                                            {{item.C_ProvinceName}}{{item.C_CityName}}<br /><!--{{item.C_CountyName}}{{item.C_Address}}<br />-->
+                                            <div ng-show="item.C_BaiduPosition">
+                                                <div class="icon icon_location"></div><a href="/map.html?position={{item.C_BaiduPosition}}" style="color:#ff0707">地图查看</a>
+                                            </div>
+                                        </td>
+                                        <td class="textCenter positionRealative">
+                                            <a href="#" data-toggle="dropdown">
+                                                {{item.GasTypeName}}、{{item.GasVarietyName}}、{{item.GasificationRateRangeName}}<br />{{item.CalorificValueRangeName}}、{{item.LiquidTemperatureName}}、{{item.UserTypeName}}
+                                            </a>
+                                            <div class="dropdown-menu tooltipDetail" id="tooltipDetail">
+                                                <div>求购类型：{{item.GasTypeName}}</div>
+                                                <div>品种：{{item.GasVarietyName}}</div>
+                                                <div>气化率：{{item.GasificationRateRangeName}}</div>
+                                                <div>热值：{{item.CalorificValueRangeName}}</div>
+                                                <div>液温：{{item.LiquidTemperatureName}}</div>
+                                                <div>备注：{{item.C_Remark}}</div>
+                                                <div>场站名称：{{item.C_StationShortName}}（{{item.C_Address}}）</div>
+                                                <div>场站类型：{{item.UserTypeName}}</div>
+                                                <div>场站总罐容：{{item.C_StationCapacity}}立方</div>
+                                                <div>日均供气量：{{item.C_DailyConsumption1}}公斤</div>
+                                                <div>日均供气量：{{item.C_DailyConsumption2}}方</div>
+                                            </div>
+                                        </td>
+                                        <td class=" textCenter" ng-bind="item.DATE_ENTERED | date:'MM-dd HH:mm'"></td>
+                                        <td class="textCenter">{{item.C_ArriveTime | date:'MM-dd HH:mm'}}</td>
+                                        <td class="textCenter">
+                                            {{item.C_ValidityTime | date:'MM-dd HH:mm'}}
+                                            <div class="silverFont" style="font-weight:bold;">还有<span class="colorOrange" ng-bind="item.C_ValidityTime | diffHourFilter"></span>个小时</div>
+                                        </td>
+                                        <td class="textCenter price">
+                                            <div ng-if="item.C_Status==1">等待报价</div>
+                                            <div class="silverFont">有<span class="colorOrange">{{item.C_Totle}}</span>个报价</div>
+                                        </td>
+                                        <td class="textCenter">
+                                            <div class="xqan" ng-if="item.QuoteStatus===0" data-toggle="modal"
+                                                 ng-click="addQuotePrice($index)" style="border-radius:0px;">报价</div>
+                                            <div class="xqan" ng-if="item.QuoteStatus===1" data-toggle="modal"
+                                                 ng-click="editQuotePrice($index)" style="border-radius:0px;">编辑报价</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal fade" id="quoteModal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document" style="width:650px;">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color:#0065e6;">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: #004ca3;margin-top:-5px;opacity:1;color:white;border-radius:15px;padding-left:1px;"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" style="color:white;letter-spacing:16px;margin-top:-3px;">报价</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-horizontal">
+                                            <div class="row form-group">
+                                                <div class="col-md-4" id="gaspublish">
+                                                    <label class="control-label col-md-3" style="width: 43%;padding-left:2px;padding-right:17px;margin-left:15px;margin-right:-12px;"><span class="colorRed">*</span>气源地：</label>
+                                                    <div class="form-control col-md-4 dropdown" style="width: 54%;padding-left:1px;">
+                                                        <div class="overflow" data-toggle="dropdown" data-target="#" style="padding-left:8px;">
+                                                            <span ng-if="model.DeliveryName" ng-bind="model.DeliveryName"></span>
+                                                            <span ng-if="!model.DeliveryName" class="colorGray">请选择气源地</span>
+                                                            <span class="dropDownRight2">
+                                                            </span>
+                                                        </div>
+                                                        <div data-panel='plants' class="dropdown-menu deliveryPanel" ng-if="model.C_GasVarietyID != '2'">
+                                                            <ul class="nav nav-tabs">
+                                                                <li ng-repeat="item in regions" ng-class="{active:tabGasSource===$index}"><a ng-click="GetPlants($event, item)" data-toggle="tab" data-target="#">{{item}}</a></li>
+                                                                <li ng-class="{active:tabGasSource === -1}"><a ng-click="plantSelect2()"><span class="colorRed">其他</span></a></li>
+                                                            </ul>
+                                                            <ul class="nav nav-pills">
+                                                                <li ng-repeat="item in plants"><a ng-click="plantSelect2(item)">{{item.C_GasSourceName}}</a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="dropdown-menu deliveryPanel" ng-if="model.C_GasVarietyID === '2'">
+                                                            <ul class="nav nav-pills">
+                                                                <li ng-repeat="item in baseData.Wharf"><a ng-click="plantSelect2(item)">{{item.C_GasSourceName}}</a></li>
+                                                                <li><a ng-click="plantSelect2()"><span class="colorRed">其他</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div ng-class="{'has-error':gas.rate.$dirty && gas.rate.$invalid}">
+                                                        <label class="control-label col-md-5" style="padding-left:0px;"><span class="colorRed">*</span>气化率：</label>
+                                                        <input type="text" name="rate" class="form-control col-md-7" style="background-image:none;padding-left:8px;margin-left:-12px;width:53.5%;" ng-model="model.C_GasificationRate" maxlength="5" ng-pattern="/^\d+$/" required />
+                                                        <div class="glyphicon glyphicon-ok form-glyphicon" ng-show="gas.rate.$dirty && gas.rate.$valid"></div>
+                                                        <div class="glyphicon glyphicon-remove form-glyphicon" ng-show="gas.rate.$dirty && gas.rate.$invalid"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4" style="padding-right:0">
+                                                    <div ng-class="{'has-error':gas.calorific.$dirty && gas.calorific.$invalid}">
+                                                        <label class="control-label col-md-5" style="padding-left:0px;padding-right:1.5px;">热值：</label>
+                                                        <input type="text" name="calorific" class="form-control col-md-7" style="background-image: none; margin-left: 0px;width:48.5%;padding-left:8px;" ng-model="model.C_CalorificValue" maxlength="5" ng-pattern="/^\d+$/">
+                                                        <div class="glyphicon glyphicon-ok form-glyphicon" ng-show="gas.calorific.$dirty && gas.calorific.$valid"></div>
+                                                        <div class="glyphicon glyphicon-remove form-glyphicon" ng-show="gas.calorific.$dirty && gas.calorific.$invalid"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group" ng-if="model.DeliveryName === '其他'" style="width: 95%; margin-left: 3%; margin-right: 0; background-color: #f4f3f2;height:50px;padding-top:8px;">
+                                                <div class="col-md-4" ng-if="model.DeliveryName === '其他'" style="width:50%;">
+                                                    <label class="control-label col-md-3" style="width: 54%; margin-left: -9px; padding-right: 0;padding-left:1px;"><span class="colorRed">*</span>其他气源所在区域：</label>
+                                                    <select class="form-control col-md-4" ng-model="model.C_GasZoneID" id="C_GasZoneID"
+                                                            ng-options="item.C_ZoneID as item.C_ZoneName for item in baseData.Zone" style="width: 44%;background-color:white;padding-right:6px;">
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4" ng-if="model.DeliveryName === '其他'" style="width:50%;padding-right:14px;">
+                                                    <label class="control-label col-md-3" style="width: 46%; padding-left:17px; padding-right: 0px; text-align: left;"><span class="colorRed">*</span>其他气源名称：</label>
+                                                    <input class="form-control col-md-4" ng-model="model.C_GasSourceName" style="background-image:none; width: 54%;background-color:white;" />
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-4">
+                                                    <div ng-class="{'has-error':gas.temperature.$dirty && gas.temperature.$invalid}">
+                                                        <label class="control-label col-md-4" style="padding-right:5px;width:44%;"><span class="colorRed">*</span>液温：</label>
+                                                        <select class="form-control col-md-8" ng-model="model.C_LiquidTemperature" style="padding-left:6px;margin-left:1px;width:54.6%;padding-right:6px;" id="C_LiquidTemperature" name="temperature"
+                                                                ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.LiquidTemperature" required>
+                                                            <option value="">请选择</option>
+                                                        </select>
+                                                        <div class="glyphicon glyphicon-ok form-glyphicon" ng-show="gas.temperature.$dirty && gas.temperature.$valid"></div>
+                                                        <div class="glyphicon glyphicon-remove form-glyphicon" ng-show="gas.temperature.$dirty && gas.temperature.$invalid"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4" style="width:36%">
+                                                    <label class="control-label col-md-4" style="padding-right:2px;width:38%;margin-left:-11px;text-align:left;padding-left:1px;"><span class="colorRed">*</span>到岸报价：</label>
+                                                    <input class="form-control col-md-6" type="text" style="border: 1px solid #ff6400; width: 49%; background-image: none; margin-left: 0px; background-color: #ff6400; color: white; " maxlength="4" ng-model="model.C_Price" ng-pattern="/^[3-6]\d{3}$/" autocomplete="off" />
+                                                    <label class="control-label" style="font-weight:normal;">&nbsp;元/吨</label>
+                                                </div>
+                                                <div class="col-md-4" style="width:30%">
+                                                    <label class="control-label col-md-5" style="width: 41%;padding-right:1px;">付款方式：</label>
+                                                    <select class="form-control col-md-7" ng-model="model.C_TypeOfPay" id="C_TypeOfPay" style="width:59%;padding-right:6px;padding-left:4px;" name="temperature"
+                                                            ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.TypeOfPay" required>
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-4">
+                                                    <label class="control-label col-md-5" style="width: 45%;padding-right:6.5px;">车头类型：</label>
+                                                    <select class="form-control col-md-7" ng-model="model.C_TypeOfCarFuel" id="C_TypeOfCarFuel" style="width:54.5%;padding-left:6px;padding-right:6px;" name="temperature"
+                                                            ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.TypeOfCarFuel" required></select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="control-label col-md-5" style="padding-right:0;margin-left:-14px;">车辆罐容：</label>
+                                                    <input class="form-control col-md-6" type="text" style="background-image:none;width:53%;margin-left:3px;" ng-model="model.C_Tonnage" required />
+                                                    <label class="control-label col-md-1" style="font-weight:normal;">&nbsp;m³</label>
+                                                </div>
+                                                <div class="col-md-4" style="padding-right:1px;">
+                                                    <label class="control-label col-md-5" style="padding-right:0;">押车标准：</label>
+                                                    <select class="form-control col-md-7" ng-model="model.C_StandardOfYaChe" id="C_StandardOfYaChe" style="padding-right: 6px; width: 49%; margin-left: 1px; padding-left: 4px;" name="temperature"
+                                                            ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.StandardOfYaChe" required></select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="control-label col-md-3" style="text-align:left;padding-left:19px;">
+                                                    <span ng-if="model.C_TypeOfCarFuel == 1">油头车气差处理：</span>
+                                                    <span ng-if="model.C_TypeOfCarFuel == 2">气头车气差处理：</span>
+                                                    <span ng-if="model.C_TypeOfCarFuel == 3">气差处理：</span>
+                                                </label>
+                                                <select class="form-control col-md-7" style="padding-left:15px;margin-left:-2.6em;padding-right:6px;padding-left:5px;" ng-model="model.C_ProcessOfGasDifference" id="C_ProcessOfGasDifference" name="temperature"
+                                                        ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.ProcessOfGasDifference" required></select>
+                                            </div>
+                                            <!--<div class="row form-group">
+                                                <label class="control-label col-md-3" style="text-align:left;">油头车气差处理：</label>
+                                                <select class="form-control col-md-7" style="padding-left:15px;margin-left:-2em;" ng-model="model.C_ProcessOfCarGasDifference" id="C_ProcessOfCarGasDifference" name="temperature"
+                                                        ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.ProcessOfCarGasDifference" required>
+                                                    <option>请选择</option>
+                                                </select>
+                                            </div>-->
+                                            <div class="row form-group">
+                                                <div class="col-md-4" style="padding-left:15px;">
+                                                    <button class="btn btnRed col-md-5" style="width:80px;" ng-click="addQuotePriceToList()">{{model.AddOrEdit}}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive marginTop15px" style="overflow-x:visible;">
+                                            <table class="table blueTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:58%">气源信息</th>
+                                                        <th style="width:23%">报价（元/吨）</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in QuotePriceList | filter: deletedFilter">
+                                                        <td style="width:310px;">
+                                                            <div style="color:black;"><span class="gasInformation">{{item.C_GasSourceName}};</span><span class="gasInformation">{{item.C_GasificationRate}};</span><span class="gasInformation">{{item.C_CalorificValue}};</span><span class="gasInformation">{{item.C_LiquidTemperature_Name}};</span></div>
+                                                            <div style="color:grey;"><span class="gasInformation">{{item.C_TypeOfPay_Name}};</span><span class="gasInformation">{{item.C_TypeOfCarFuel_Name}};</span><span class="gasInformation">{{item.C_Tonnage}};</span><span class="gasInformation">{{item.C_StandardOfYaChe_Name}};</span></div>
+                                                            <div style="color:grey;"><span class="gasInformation">{{item.C_ProcessOfGasDifference_Name}}</span></div>
+                                                        </td>
+                                                        <td class="textCenter" style="font-weight:bold;color:#ff6400;font-size:18px;">{{item.C_Price}}</td>
+                                                        <td class="textCenter" style="width:135px;">
+                                                            <div class="btnRed" ng-click="editQuote($index)" style="background-color:white;color:#0065e6;float:left;margin-left:12px;">编辑</div>
+                                                            <div class="btnRed" ng-click="removeQuotePrice($index)" style="background-color: white; color: #0065e6">删除</div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btnRed" ng-click="saveQuotePrice()" style="width:80px;margin-left:3px;">确认提交</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="InitData()" style="width:80px;">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--在途气平台-->
+                    <div class="tableStyle1" ng-controller="transitController">
+                        <div class="title">
+                            <div class="icon icon_ico10"></div>
+                            在途气平台
+                            <a href="transit.html">
+                                <div class="more">
+                                    <div class="icon icon_more"></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="table-responsive">
+                            <!-- Table -->
+                            <table class="table" data-ng-init="GetTransitListTop()">
+                                <thead>
+                                    <tr>
+                                        <th class="">公司名称</th>
+                                        <th class="">气源类型</th>
+                                        <th>品种</th>
+                                        <th>气源地</th>
+                                        <th>气化率</th>
+                                        <th>出发地</th>
+                                        <th>目标地</th>
+                                        <th>实时位置</th>
+                                        <th class="width50">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in TransitTopList">
+                                        <td class="textCenter"><a href="/client.html?id={{item.SellerClientID}}" ng-bind="item.Seller"></a></td>
+                                        <td class="textCenter" ng-bind="item.GasTypeName"></td>
+                                        <td class="textCenter" ng-bind="item.GasVarietyName"></td>
+                                        <td class="textCenter" ng-bind="item.C_GasSourceName"></td>
+                                        <td class="textCenter" ng-bind="item.C_GasificationRate"></td>
+                                        <td class="textCenter">{{item.FromProvinceName}}</td>
+                                        <td class="textCenter">{{item.TargetProvinceName}}</td>
+                                        <td class="textCenter ">
+                                            <div class="icon icon_location"></div>
+                                            <a href="/map2.html?id={{item.C_CarID}}">地图查看</a>
+                                        </td>
+                                        <td class="textCenter">
+                                            <a href="transit.html?C_ClientShortName={{item.C_ClientName}}">
+                                                <div class="xqan" style="height: 27px; padding-top: 4px; margin-top: -13px;">详情</div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--行业资讯-->
+                    <div class="tableStyle1 hidden480" id="tradingMarket" ng-controller="MarketInfoController">
+                        <div class="title">
+                            <div class="icon icon_ico11"></div>
+                            行业资讯
+                            <a href="gasnews.html">
+                                <div class="more">
+                                    <div class="icon icon_more"></div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="tradingMarketbox">
+                            <div class="gasnews">
+                                <div class="gasnewstop" data-ng-init="GetMInfoCover(1)">
+
+                                    <div id="ad-generic" class="carousel slide" data-ride="carousel">
+                                        <!-- Indicators -->
+                                        <!--<ol class="carousel-indicators" style="bottom: -1px; left: 360px;">
+                                            <li data-target="#ad-generic" data-slide-to="0" class="active"></li>
+                                            <li data-target="#ad-generic" data-slide-to="1"></li>
+                                            <li data-target="#ad-generic" data-slide-to="2"></li>
+                                        </ol>-->
+                                        <div class="carousel-inner" role="listbox">
+                                            <div ng-repeat="item in MInfoPicture" class="item active">
+                                                <img style="width: 320px; height: 198px;" class="gasnewstopleft" src="/member/Data/Upload/Images/{{item.C_Cover}}" alt="新闻图片" />
+                                                <div class="gasnewstopright">
+                                                    <div class="gasnewstoprightbox">
+                                                        <a href="gasnewsdetail.html?ID={{item.ID}}" class="gntrb1" ng-bind="item.C_Title"></a>
+                                                        <div class="gntrb2" ng-bind="item.DATE_ENTERED | date:'yyyy-MM-dd'"></div>
+                                                        <div class="gntrb3" ng-bind="item.C_Introduction"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="gasnewsmiddle"></div>
+                                <div class="gasnewsbottom">
+                                    <div class="gasnewsbottomleft" data-ng-init="GetMInfoListTop1_5()">
+                                        <ul class="gnewsul">
+
+                                            <li class="gnewsli" ng-repeat="item in MInfoListTop5"><a href="gasnewsdetail.html?ID={{item.ID}}" ng-bind="item.C_Title"><span class="gnewslileft"></span></a><span class="gnewsliright silverFont" ng-bind="item.DATE_ENTERED| date:'yyyy-MM-dd'"></span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="gasnewsbottomright" data-ng-init="GetMInfoListTop5_10()">
+                                        <ul class="gnewsul">
+                                            <li class="gnewsli" ng-repeat="item in MInfoListTop5_10"><a href="gasnewsdetail.html?ID={{item.ID}}" ng-bind="item.C_Title"><span class="gnewslileft"></span></a><span class="gnewsliright silverFont" ng-bind="item.DATE_ENTERED| date:'yyyy-MM-dd'"></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 hidden480" ng-controller="orderController">
+                    <div id="guidedPrice" style="width: 100%;" data-ng-init="GetMarketData()">
+                        <div class="title">
+                            <div class="left">今日LNG指导价</div>
+                            <div class="right" ng-bind="currentDay"></div>
+                            <div class="triangle1"></div>
+                        </div>
+                        <div class="content">
+                            <div class="price2" style="width: 100%; padding-bottom: 0px;">
+                                <div id="carousel-marketData" class="carousel slide" data-ride="carousel" style="height: 360px;">
+                                    <!-- Indicators -->
+                                    <ol class="carousel-indicators" style="bottom: 3px;" ng-init="i=0;">
+                                        <li data-target="#carousel-marketData" data-slide-to="0" class="active"></li>
+                                        <li data-target="#carousel-marketData" data-slide-to="1" ng-if="marketLength > 1"></li>
+                                        <li data-target="#carousel-marketData" data-slide-to="2" ng-if="marketLength > 2"></li>
+                                        <li data-target="#carousel-marketData" data-slide-to="3" ng-if="marketLength > 3"></li>
+                                        <li data-target="#carousel-marketData" data-slide-to="4" ng-if="marketLength > 4"></li>
+                                        <li data-target="#carousel-marketData" data-slide-to="5" ng-if="marketLength > 5"></li>
+                                        <li data-target="#carousel-marketData" data-slide-to="6" ng-if="marketLength > 6"></li>
+                                        <li data-target="#carousel-marketData" data-slide-to="7" ng-if="marketLength > 7"></li>
+                                    </ol>
+                                    <div class="carousel-inner" role="listbox" style="height:346px;">
+                                        <div class="item" ng-repeat="item1 in MarketData">
+                                            <table class="table borderStyle3" ng-repeat="item2 in item1" style="margin-bottom: 0px;">
+                                                <tr class="tr_detail disabled" ng-init="GetClientInformationMyJqueryInit()" style="height: 142px;">
+                                                    <td colspan="4">
+                                                        <div class="silverFont">
+                                                            更新日期：11月4日 10:55
+                                                        </div>
+                                                        <div style="margin-bottom: 10px;">
+                                                            <div class="darkRedFont" style="width: 100%; height: 28px; text-align: center;">
+                                                                {{item2.C_GasSourceName}}
+                                                            </div>
+                                                            <div style="position: relative;">
+                                                                <div class="left" style="margin-left: 10px;">
+                                                                    <div class="greenFontLarge">{{item2.C_GuidePrice}}</div>
+                                                                    <div class="greenFont2">
+                                                                        <span>{{item2.SUBTRACT}}</span>
+                                                                        <span class="carousel-marketData_greenFont2-span2">{{item2.SUBTRACT_Rate}}</span>
+                                                                    </div>
+                                                                    <div style="width:138px;">{{item2.GasVarietyName}} {{item2.C_GasificationRate}} {{item2.C_CalorificValue}}</div>
+                                                                </div>
+                                                                <div class="right" style="position: absolute; right: 10px; top: 20px;">
+                                                                    <div class="icon icon_fall_big" ng-if="item2.SUBTRACT < 0"></div>
+                                                                    <div class="icon icon_rise_big" ng-if="item2.SUBTRACT > 0"></div>
+                                                                    <!--<div style="width:200px; height:100px; background-color:blue;" ng-if="item2.SUBTRACT > 0"></div>-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="tr_short">
+                                                    <td style="min-width: 90px;">{{item2.C_GasSourceName}}</td>
+                                                    <td class="greenFont" style="min-width: 60px;">{{item2.C_GuidePrice}}</td>
+                                                    <td class="greenFont" style="min-width: 50px;">{{item2.SUBTRACT}}</td>
+                                                    <td style="min-width: 20px;">
+                                                        <div class="icon icon_fall" ng-if="item2.SUBTRACT < 0"></div>
+                                                        <div class="icon icon_unchanged" ng-if="!item2.SUBTRACT"></div>
+                                                        <div class="icon icon_rise" ng-if="item2.SUBTRACT > 0"></div>
+                                                        <!--<div class="icon icon-minus" ng-if="item2.SUBTRACT = 0"></div>-->
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 16px; padding-left: 3px; height: 20px; width: 100%; float: left; margin-top: 27px;">交易记录</div>
+                    <div class="borderStyle4" id="orderHistory" style="margin-top: 10px;">
+                        <table class="table" data-ng-init="GetOrderListTop25()">
+                            <thead>
+                                <tr>
+                                    <th width="50">用户</th>
+                                    <th width="75">采购内容</th>
+                                    <th width="75">交易状态</th>
+                                    <th>时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in orderList">
+                                    <td ng-bind="item.FULL_NAME | markFullNameFilter"></td>
+                                    <td ng-bind="item.GasVarietyName" class="colorBlue textCenter"></td>
+                                    <td class="colorOrange textCenter" ng-bind="item.StatusName"></td>
+                                    <td ng-bind="item.DATE_ENTERED | date:'HH:mm'"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="placeHolderFooter" ng-include src="footerHtml"></div>
+
+    <script src="js/bootstrap.min.js" defer async="async"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/site.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+﻿<div class="footer">
+    <div class="container">
+        <div class="row hidden480">
+            <div class="col-md-3" style="padding-left:6px;">
+                <div class="logo_gray"><img style="margin-top:-8px; height:83px;width:160px" src="images/logo_gray.png" /></div>
+                <ul class="nav support">
+                    <li style="margin-top:4px;"><span class="silverFont">公司名称：</span><span class="fontBold">北京博宏通联网络科技有限公司</span></li>
+                    <li style="margin-top:4px;"><span class="silverFont">公司电话：</span><span class="fontBold">010-67665425</span></li>
+                    <li style="margin-top:4px;"><span class="silverFont">公司地址：</span><span class="fontBold">北京市西城区阜成门外大街甲271号</span></li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <div class="icon icon_line2"></div>
+                <div class="foot_title">
+                    <div class="icon icon_ico12"></div> 关于我们
+                </div>
+                <ul class="nav">
+                    <li><a href="/Member/About/" data-parent="#menu2"><div class="icon icon_arrow"></div>企业简介</a></li>
+                    <li><a href="/Member/About/about2.aspx" data-parent="#menu2"><div class="icon icon_arrow"></div>企业文化</a></li>
+                    <!--<li><a href="/Member/About/about3.aspx" data-parent="#menu2"><div class="icon icon_arrow"></div>企业愿景</a></li>-->
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <div class="icon icon_line2"></div>
+                <div class="foot_title"><div class="icon icon_ico13"></div> 操作说明</div>
+                <ul class="nav">
+                    <li><a href="/Member/About/about7.aspx" data-parent="#menu3"><div class="icon icon_arrow"></div>现货搜索</a></li>
+                    <li><a href="/Member/About/about8.aspx" data-parent="#menu3"><div class="icon icon_arrow"></div>求购报价</a></li>
+                    <li><a href="/Member/About/about9.aspx" data-parent="#menu3"><div class="icon icon_arrow"></div>交易指南</a></li>
+                    <li><a href="/Member/About/about10.aspx" data-parent="#menu3"><div class="icon icon_arrow"></div>常见问题</a></li>
+                </ul>
+            </div>
+            <div class="col-md-5">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="icon icon_line2"></div>
+                        <div class="foot_title"><div class="icon icon_ico14"></div> 扫一扫关注我们</div>
+                        <div class="qrcode">
+                            <img src="images/qrcode1.jpg" />
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="icon icon_line2"></div>
+                        <div class="marginLeft10px">
+                            <div class="foot_title">
+                                <div class="icon icon_ico15">APP下载</div>
+                            </div>
+                            <div class="qrcode2">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img src="images/qrcode2.jpg" id="iosClient" />
+                                        <img src="images/qrcode1.jpg" id="androidClient" style="display:none;" />
+                                    </div>
+                                    <div class="col-md-6" style="padding-left:20px;">
+                                        <div class="colorOrange" id="iosClientTxt">IOS版</div>
+                                        <div id="androidClientTxt" class="paddingTop5px">Android版</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <script>
+                                $("#iosClientTxt").click(function () {
+                                    $("#androidClient").hide();
+                                    $("#iosClient").show();
+                                    $("#androidClientTxt").removeClass("colorOrange");
+                                    $("#iosClientTxt").addClass("colorOrange");
+
+                                });
+
+                                $("#androidClientTxt").click(function () {
+                                    $("#iosClient").hide();
+                                    $("#androidClient").show();
+                                    $("#iosClientTxt").removeClass("colorOrange");
+                                    $("#androidClientTxt").addClass("colorOrange");
+                                });
+
+
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="foot_txt">
+            <div class="textCenter2">
+                <a href="/Member/About/about6.aspx" data-parent="#menu2">法律声明</a>
+                &nbsp;| &nbsp;<a>诚招英才</a>
+                &nbsp;| &nbsp;<a href="/Member/About/about4.aspx" data-parent="#menu2">联系我们</a>
+                &nbsp;| &nbsp;<a href="/Member/About/about5.aspx" data-parent="#menu2">友情链接</a>
+            </div>
+            <div class="textCenter2">
+                COPYRIGHT &copy; www.517taoqi.com 京ICP备15058548号
+            </div>
+            <!--<div class="img2 hidden480">
+                <img src="images/foot_img1.jpg" />
+                <img src="images/foot_img2.jpg" />
+                <img src="images/foot_img3.jpg" />
+            </div>-->
+        </div>
+    </div>
+</div>

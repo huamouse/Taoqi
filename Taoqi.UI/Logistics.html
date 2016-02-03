@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" ng-app="taoqiApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="description" content="天然气行业第三方交易平台">
+    <meta name="keywords" content="517淘气网，天然气交易平台，天然气物流，天然气行情">
+    <title>淘气物流</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <style>
+        select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: url(images/select.png) scroll right no-repeat;
+        }
+
+            select::-ms-expand {
+                display: none;
+            }
+    </style>
+
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js" defer async="async"></script>
+      <script src="js/respond.min.js" defer async="async"></script>
+    <![endif]-->
+</head>
+
+<body ng-controller="baseController" ng-init="InitByCookie()">
+    <div id="placeHolderHeader" ng-include src="headerHtml"></div>
+
+    <div id="mainBody">
+        <div>
+            <div class="wlinquiry1">
+                <div class="wlinquiry2">
+                    <div class="wlforcar1">
+                        <div class="wlforcar2">
+                            <div class="wlforcar3">
+                                询价找车
+                                <a href="#" class="qqlx" style="color:white;">QQ联系</a>
+                                <img src="images/home_78.png" class="qqpic" style="margin-left:210px;" />
+                            </div>
+                            <div class="wlthd one">
+                                <img src="images/05-tqwl1.jpg" class="wlthd1" />
+                                <div class="one1">提货地</div>
+                                <div class="delivery dropdown">
+                                    <div class="deliveryBorder" data-toggle="dropdown" data-target="#">
+                                        <span ng-if="entity.DeliveryName" ng-bind="entity.DeliveryName"></span>
+                                        <span ng-if="!entity.DeliveryName" class="colorGray" style="float:left;margin-left:1em;">请选择提货地</span>
+                                        <span class="btn floatRight">
+                                            <img src="images/select.png" class="selectdown" />
+                                        </span>
+                                    </div>
+                                    <div id="delivery" class="dropdown-menu panel" data-panel='plants'>
+                                        <ul class="nav nav-tabs">
+                                            <li ng-repeat="item in regions" ng-class="{active:tabGasSource===$index}"><a ng-click="GetPlants($event, item)" data-toggle="tab" data-target="#">{{item}}</a></li>
+                                        </ul>
+                                        <ul class="nav nav-pills">
+                                            <li ng-repeat="item in plants"><a ng-click="plantSelect(item)">{{item.C_GasSourceName}}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="wlthd one">
+                                <img src="images/05-tqwl2.jpg" class="wlthd1" />
+                                <div class="one1">
+                                    到岸地
+                                </div>
+                                <div class="delivery dropdown">
+                                    <div class="deliveryBorder" data-toggle="dropdown" data-target="#">
+                                        <span ng-if="entity.LandName" ng-bind="entity.LandName"></span>
+                                        <span ng-if="!entity.LandName" class="colorGray" style="float:left;margin-left:1em;">请选择到岸地</span>
+                                        <span class="btn floatRight">
+                                            <img src="images/select.png" class="selectdown" />
+                                        </span>
+                                    </div>
+                                    <div id="delivery1" class="dropdown-menu panel" data-panel='plants'>
+                                        <ul class="nav nav-tabs">
+                                            <li ng-class="{active:tabLand===0}"><a data-toggle="tab" data-target="#" ng-click="getProvinces($event)">省份</a></li>
+                                            <li ng-class="{active:tabLand===1}"><a data-toggle="tab" data-target="#" ng-click="getCities($event)">城市</a></li>
+                                            <li ng-class="{active:tabLand===2}"><a data-toggle="tab" data-target="#" ng-click="getCounties($event)">县区</a></li>
+                                        </ul>
+                                        <ul class="nav nav-pills">
+                                            <li ng-repeat="item in baseData.Province" ng-if="tabLand === 0">
+                                                <a ng-click="provinceSelect($event, item)">{{item.C_ProvinceName}}</a>
+                                            </li>
+                                            <li ng-repeat="item in cities" ng-if="tabLand === 1">
+                                                <a ng-click="citySelect($event, item)">{{item.C_CityName}}</a>
+                                            </li>
+                                            <li ng-repeat="item in counties" ng-if="tabLand === 2">
+                                                <a ng-click="countySelect(item.C_CountyID, item.C_CountyName)">{{item.C_CountyName}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wlthd one">
+                                <img src="images/05-tqwl3.jpg" class="wlthd1" />
+                                <div class="one1">
+                                    <div class="oneleft">车</div>
+                                    <div class="oneright">型</div>
+                                </div>
+                                <select class="wlthd2">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="wlsl one">
+                                <img src="images/05-tqwl4.jpg" class="wlslpic" />
+                                <div class="one1">
+                                    <div class="oneleft">数</div>
+                                    <div class="oneright">量</div>
+                                </div>&nbsp;
+                                <select class="wlslse1">
+                                    <option></option>
+                                </select>
+                                车&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style="color:#666161;">罐容</span>
+                                <select class="wlslse2">
+                                    <option></option>
+                                </select>
+                                立方米
+                            </div>
+
+
+
+                            <div class="wlwzxs">
+                                我们的参考价来自真实订单成交数据
+                            </div>
+                            <div class="wlbtn">
+                                <button id="wlbtn1">
+                                    <img src="images/tqwl_icon_19.png" />
+                                    查询价
+                                </button>
+                                <button id="wlbtn2" ng-click="entrustLogistics()">帮我找车</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="blank1"></div>
+        <div class="wldown">
+            <div class="wldown1">
+                <div class="wladtitle">
+                    淘气物流四大优势
+                </div>
+                <div class="blank2"></div>
+
+
+                <div id="Wladtext">
+
+
+
+                    <div class="wladtext1 wladtext">
+                        <div class="wladno11">
+                            NO.1
+                        </div>
+                        <div class="wladno12">
+                            <h4>免费服务</h4>
+                            我们提供免费服务，帮您找到最合适的承运商。
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="wladtext2 wladtext">
+                        <div class="wladno21">
+                            NO.2
+                        </div>
+                        <div class="wladno22">
+                            <h4>资源优质</h4>
+                            我们只与已签约的承运商合作,保证安全可靠。
+                        </div>
+                    </div>
+
+
+
+                    <div class="wladtext3 wladtext">
+                        <div class="wladno11">
+                            NO.3
+                        </div>
+                        <div class="wladno12">
+                            <h4>报价快速</h4>
+                            强大物流后台支撑，专业物流专员报价快又准。
+                        </div>
+                    </div>
+
+                    <div class="wladtext4 wladtext">
+                        <div class="wladno21">
+                            NO.4
+                        </div>
+                        <div class="wladno22">
+                            <h4>保障安全</h4>
+                            为您全程跟踪物流状态，确保货物安全地送达。
+                        </div>
+                    </div>
+
+
+
+                    <div class="wladtext5">
+                        <br />淘气物流<br />
+                        四大优势
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+            <div class="wlrecord">
+                <div class="wlrecordtitle">
+                    实时委托记录
+                </div>
+                <div style="height:300px;">
+                    <table class="wlrecordtb">
+                        <thead>
+                            <tr>
+                                <th class="col-md-2" style="padding-left:10px;padding-right:10px;">提货地</th>
+                                <th class="col-md-3">到岸地</th>
+                                <th class="col-md-2">数量</th>
+                                <th class="col-md-2">状态</th>
+                                <th class="col-md-3">委托时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="wlrecordtbtd1">杭州市</td>
+                                <td class="wlrecordtbtd2">杭州市</td>
+                                <td class="wlrecordtbtd2">3车</td>
+                                <td class="wlrecordtbtd3">等待审核</td>
+                                <td class="wlrecordtbtd4">18:07</td>
+                            </tr>
+                            <tr>
+                                <td class="wlrecordtbtd1">杭州市</td>
+                                <td class="wlrecordtbtd2">杭州市</td>
+                                <td class="wlrecordtbtd2">3车</td>
+                                <td class="wlrecordtbtd3">等待审核</td>
+                                <td class="wlrecordtbtd4">18:07</td>
+                            </tr>
+                            <tr>
+                                <td class="wlrecordtbtd1">杭州市</td>
+                                <td class="wlrecordtbtd2">杭州市</td>
+                                <td class="wlrecordtbtd2">3车</td>
+                                <td class="wlrecordtbtd3">等待审核</td>
+                                <td class="wlrecordtbtd4">18:07</td>
+                            </tr>
+                            <tr>
+                                <td class="wlrecordtbtd1">杭州市</td>
+                                <td class="wlrecordtbtd2">杭州市</td>
+                                <td class="wlrecordtbtd2">3车</td>
+                                <td class="wlrecordtbtd3">等待审核</td>
+                                <td class="wlrecordtbtd4">18:07</td>
+                            </tr>
+                            <tr>
+                                <td class="wlrecordtbtd1">杭州市</td>
+                                <td class="wlrecordtbtd2">杭州市</td>
+                                <td class="wlrecordtbtd2">3车</td>
+                                <td class="wlrecordtbtd3">等待审核</td>
+                                <td class="wlrecordtbtd4">18:07</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="wlrecordcontact">
+                    <b><i>承运商请联系:</i></b>
+                    <img src="images/home_70.png" class="wljlpic" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="placeHolderFooter" ng-include src="footerHtml"></div>
+
+    <script src="js/bootstrap.min.js" defer async="async"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/site.js"></script>
+</body>
+</html>

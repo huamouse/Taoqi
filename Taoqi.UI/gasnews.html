@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" ng-app="taoqiApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="description" content="天然气行业第三方交易平台">
+    <meta name="keywords" content="517淘气网，天然气交易平台，天然气物流，天然气行情">
+    <meta property="qc:admins" content="1177077740572206" />
+    <title>517淘气网</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js" defer async="async"></script>
+      <script src="js/respond.min.js" defer async="async"></script>
+    <![endif]-->
+</head>
+
+<body ng-controller="baseController" ng-init="InitByCookie()">
+    <div id="placeHolderHeader" ng-include src="headerHtml"></div>
+
+    <div class="container" ng-controller="MarketInfoController">
+        <div id="gasnewstitle">
+            <span class="gntitleleft">行业资讯</span>
+            <span class="gntitleright">首页-行业资讯</span>
+        </div>
+        <div id="gnpic" data-ng-init="GetMInfoCover(3)">
+
+            <div class="gnpicleft" ng-repeat="item in MInfoPicture">
+                <a href="gasnewsdetail.html?ID={{item.ID}}">
+                    <img class="gnpicture" src="{{item.C_Cover}}" />
+                    <div class="gnpictext">
+                        <div class="gnpictext1" ng-bind="item.C_Title"></div>
+                        <div class="gnpictext2" ng-bind="item.C_Introduction"></div>
+                        <div class="gnpictext3">
+                            <span class="gnpictext3left" ng-bind="item.C_PublishDate| date:'yyyy-MM-dd'"></span>
+                            <span class="gnpictext3right">详情 >></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+        <div id="loading"><img src="/images/loading.gif" /></div>
+
+        <div id="gntext" data-ng-init="GetMInfoList()">
+            <div class="gntext1" ng-repeat="item in MInfoList">
+                <a href="gasnewsdetail.html?ID={{item.ID}}">
+                    <div class="gntexttop">
+                        <span class="gntexttopleft" ng-bind="item.C_Title"></span>
+                        <span class="gntexttopright" ng-bind="item.C_PublishDate| date:'yyyy-MM-dd'"></span>
+                    </div>
+                    <div class="gntextbottom">
+                        <span class="gntextbottomleft" ng-bind="item.C_Introduction"></span>
+                        <div class="gntextbottomright">详情</div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+        <div>
+            <ul class="pagination">
+                <li>
+                    <a href="#" ng-click="paging(1)">
+                        <span aria-hidden="true">首页</span>
+                    </a>
+                </li>
+                <li ng-class="{'disabled':currentPageIndex == 1}">
+                    <a href="#" aria-label="Previous" ng-click="search(-1,null,pageTotal)">
+                        <span aria-hidden="true">上一页</span>
+                    </a>
+                </li>
+                <li ng-repeat="item in pageList" ng-class="{'active':item == currentPageIndex}"><a href="#" ng-click="paging(item)">{{item}}</a></li>
+                <li ng-class="{'disabled':currentPageIndex == pageTotal}">
+                    <a href="#" aria-label="Next" ng-click="search(1,null,pageTotal)">
+                        <span aria-hidden="true">下一页</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" ng-click="paging(pageTotal)">
+                        <span aria-hidden="true">末页</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="pagingTotal">共{{pageTotal}}页</div>
+
+        </div>
+    </div>
+
+    <div id="placeHolderFooter" ng-include src="footerHtml"></div>
+
+    <script src="js/bootstrap.min.js" defer async="async"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/site.js"></script>
+</body>
+</html>

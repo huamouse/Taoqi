@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" ng-app="taoqiApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="description" content="天然气行业第三方交易平台">
+    <meta name="keywords" content="517淘气网，天然气交易平台，天然气物流，天然气行情">
+    <title>免费行情</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <style>
+        select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: url(images/select.png) scroll right no-repeat;
+        }
+
+            select::-ms-expand {
+                display: none;
+            }
+    </style>
+
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js" defer async="async"></script>
+      <script src="js/respond.min.js" defer async="async"></script>
+    <![endif]-->
+</head>
+
+<body ng-controller="baseController" ng-init="InitByCookie()">
+    <div id="placeHolderHeader" ng-include src="headerHtml"></div>
+    <div class="container market" id="mainBody">
+        <div class="row">
+            <div class="col-md-9" style="margin-top:10px;">
+                <div class="titleBar">
+                    <img class="titleBarimg" src="images/titleBarimg.png" />
+                </div>
+                <div id="searchBar" class="borderStyle6" ng-init="isSearch=true;">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label>类别</label>
+                            <select class="searchBar" ng-change="search()" ng-model="entity.C_GasTypeID"
+                                    ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.GasType">
+                                <option value="">不限</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>品种</label>
+                            <select class="searchBar" ng-change="search()" ng-model="entity.C_GasVarietyID"
+                                    ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.GasVariety">
+                                <option value="">不限</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-show="entity.C_GasVarietyID">
+                            <label class="overflow">气源地</label>
+                            <div class="searchBar dropdown inline">
+                                <div class="deliverySearch overflow" data-toggle="dropdown" data-target="#">
+                                    <span ng-if="entity.DeliveryName" ng-bind="entity.DeliveryName"></span>
+                                    <span ng-if="!entity.DeliveryName" class="colorGray">请选择气源地</span>
+                                    <span class="dropDownRight">
+                                        <span class="caret"></span>
+                                    </span>
+                                </div>
+                                <div id="delivery" class="dropdown-menu panel" data-panel='plants' ng-show="entity.C_GasVarietyID != '2'">
+                                    <ul class="nav nav-tabs">
+                                        <li ng-repeat="item in regions"><a ng-click="GetPlants($event, item)" data-toggle="tab" data-target="#">{{item}}</a></li>
+                                    </ul>
+                                    <ul class="nav nav-pills">
+                                        <li ng-repeat="item in plants"><a ng-click="plantSelect(item)">{{item.C_GasSourceName}}</a></li>
+                                    </ul>
+                                </div>
+                                <div class="dropdown-menu panel" ng-show="entity.C_GasVarietyID === '2'">
+                                    <ul class="nav nav-pills">
+                                        <li ng-repeat="item in baseData.Wharf"><a ng-click="plantSelect(item)">{{item.C_GasSourceName}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>气化率</label>
+                            <select class="searchBar" ng-change="search()" ng-model="entity.C_GasificationRate"
+                                    ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.GasificationRate">
+                                <option value="">不限</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>液温</label>
+                            <select class="searchBar" ng-change="search()" ng-model="entity.C_LiquidTemperature"
+                                    ng-options="item.NAME as item.DISPLAY_NAME for item in baseData.LiquidTemperatureName">
+                                <option value="">不限</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btnOrange" ng-click="cancelSearch()">清除选择</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-responsive" ng-controller="freeQuotationController">
+                    <table class="table blueTable" id="quotationtb" data-ng-init="GetFreeQuotationList()">
+                        <thead>
+                            <tr>
+                                <th>公司名称</th>
+                                <th>类型</th>
+                                <th>品种</th>
+                                <th>气源地</th>
+                                <th>工厂名称</th>
+                                <th>气化率</th>
+                                <th>今日报价</th>
+                                <th>成交价</th>
+                                <th>成交时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in freeQuotationList">
+                                <td class="textCenter"><a>{{item.C_ClientShortName}}</a></td>
+                                <td class="textCenter">{{item.GasTypeName}}</td>
+                                <td class="textCenter">{{item.GasVarietyName}}</td>
+                                <td class="textCenter">{{item.ParentProvinceName}}</td>
+                                <td class="textCenter">{{item.C_GasSourceName}}</td>
+                                <td class="textCenter">{{item.C_GasificationRate}}</td>
+                                <td class="textCenter">{{item.Show_C_Price_Min}}</td>
+                                <td class="textCenter price">{{item.Show_C_Price}}</td>
+                                <td class="textCenter">{{item.Show_DATE_ENTERED}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div id="loading"><img src="/images/loading.gif" /></div>
+
+                    <div>
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" ng-click="paging(1)">
+                                    <span aria-hidden="true">首页</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'disabled':currentPageIndex == 1}">
+                                <a href="#" aria-label="Previous" ng-click="search(-1,null,pageTotal)">
+                                    <span aria-hidden="true">上一页</span>
+                                </a>
+                            </li>
+                            <li ng-repeat="item in pageList" ng-class="{'active':item == currentPageIndex}"><a href="#" ng-click="paging(item)">{{item}}</a></li>
+                            <li ng-class="{'disabled':currentPageIndex == pageTotal}">
+                                <a href="#" aria-label="Next" ng-click="search(1,null,pageTotal)">
+                                    <span aria-hidden="true">下一页</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" ng-click="paging(pageTotal)">
+                                    <span aria-hidden="true">末页</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="pagingTotal">共{{pageTotal}}页</div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+                <div class="industry">行业行情</div>
+
+                <div class="title">沿海接收站价格</div>
+                <div class="table-responsive" ng-controller="orderController">
+                    <table class="table grayTable" data-ng-init="GetDemo()">
+                        <thead>
+                            <tr>
+                                <th>接收站</th>
+                                <th>元/吨</th>
+                                <th>气化率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in demoList">
+                                <td class="textCenter">上海石油交易所</td>
+                                <td class="textCenter colorOrange">4400</td>
+                                <td class="textCenter">1350</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="title">工厂挂牌价参考</div>
+                <div class="table-responsive" ng-controller="orderController">
+                    <table class="table grayTable" data-ng-init="GetDemo()">
+                        <thead>
+                            <tr>
+                                <th>地区</th>
+                                <th>生产企业</th>
+                                <th>元/吨</th>
+                                <th>气化率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in demoList">
+                                <td class="textCenter">华东</td>
+                                <td class="textCenter">长春华润</td>
+                                <td class="textCenter colorOrange">4400</td>
+                                <td class="textCenter">1420</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <div id="placeHolderFooter" ng-include src="footerHtml"></div>
+
+    <script src="js/bootstrap.min.js" defer async="async"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-cookies.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/site.js"></script>
+</body>
+</html>
