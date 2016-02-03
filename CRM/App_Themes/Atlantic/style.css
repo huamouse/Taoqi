@@ -1,0 +1,2304 @@
+p {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+h1, h2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #666666;
+    text-transform: uppercase;
+}
+/* 10/24/2010 Paul.  Set margin top to 0 to reduce wasted space. */
+h3 {
+    margin-top: 0px;
+    margin-bottom: 3px;
+    padding-top: 3px;
+    font-size: 16px;
+    font-weight: normal;
+    color: #3e6378;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+/* 10/28/2010 Paul.  Set margin top to 0 to reduce wasted space. */
+h4, h5 {
+    margin-top: 0px;
+    margin-bottom: 2px;
+    padding-left: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #444444;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+table, td {
+    font-size: 13px;
+    color: #38404d;
+}
+
+hr {
+    height: 1px;
+}
+
+a:link, a:visited {
+    color: #0065e6;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+h2 a:link, h2 a:visited, h2 a:hover {
+    color: #666666;
+    text-decoration: none;
+}
+
+input, select, textarea {
+    border: 1px solid #e1e1e1;
+    /*background-color: #ffffff;*/
+    font-size: 13px;
+    font-family: inherit;
+    border-radius: 0;
+}
+
+input, select {
+    height: auto;
+}
+
+    /*input[type="text"], select {
+        min-width: 155px;
+        padding-left: 4px;
+    }*/
+
+
+    input[type="submit"] {
+        height: 30px;
+        line-height: normal;
+        min-width: 75px;
+        cursor: pointer;
+        
+        margin-top:15px;
+        margin-bottom:15px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        border-color: #aaaaaa;
+        background-color: #ffffff;
+    }
+
+.inline {
+    display:inline-block;
+}
+
+.moduleTitle {
+    margin-bottom: 5px;
+    padding-top: 1px;
+    padding-bottom: 3px;
+}
+
+.checkbox, .checkbox input, .radio, .radio input {
+    margin: 0px 0px 0px 0px;
+    border: none;
+    background-color: transparent;
+    vertical-align: bottom;
+}
+
+.button {
+    background-color: #018ccd;
+    font-weight: normal;
+    color: white;
+    height: 25px;
+    min-width: 85px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    line-height: 25px;
+    font-size: 13px;
+}
+
+    .button:hover, .button:focus {
+        border-color: #026e9d;
+        color: white;
+        background-color: #026e9d;
+    }
+
+.buttonOn, .buttonOn:focus {
+    border: 1px solid #999999;
+    background-color: #eeeeee;
+    background-repeat: repeat-x;
+    background-position: top;
+    font-size: 13px;
+    font-weight: normal;
+    color: #444444;
+}
+
+.required, .warning, .error {
+    color: #ff0000;
+}
+
+.tooltip {
+    display: none;
+    background-color: #ffffcc;
+    border: 1px solid #999999;
+}
+
+table.h3Row {
+    border-bottom: 1px solid #e1e1e1;
+}
+
+    table.h3Row .listTitleLeft {
+        font-size: 14px;
+        font-weight: bold;
+        border-bottom: 3px solid #018ccd;
+        width: 135px;
+        margin-bottom: -2px;
+        height: 25px;
+        line-height: 25px;
+    }
+
+    table.h3Row .listTitleRight {
+    }
+
+
+table.h3RowListheader {
+    border-bottom: 1px solid #e1e1e1;
+}
+
+    table.h3RowListheader .listTitleLeft {
+        font-size: 14px;
+        font-weight: bold;
+        border-bottom: 3px solid #018ccd;
+        width: 135px;
+        margin-bottom: -2px;
+        height: 25px;
+        line-height: 25px;
+    }
+
+.button-panel {
+    margin-bottom: 2px;
+}
+
+/* Menu styles */
+.subMenu {
+    margin: 0px 0px 10px 0px;
+    padding: 0px 0px 0px 0px;
+    border-top: 0px;
+    border-bottom: 1px solid #cccccc;
+    font-size: 13px;
+    background-color: #ffffff;
+    color: #444444;
+    width: 100%;
+}
+
+ul.subMenu li {
+    margin: 0px 0px 0px 0px;
+    border: none;
+    border-top: 1px solid #cccccc;
+    list-style: none;
+}
+
+    ul.subMenu li a {
+        padding: 3px 3px 3px 6px;
+        border: none;
+        text-decoration: none;
+        text-align: left;
+        display: block;
+    }
+
+        ul.subMenu li a:hover {
+            background-color: #f8f8f8;
+            color: #990033;
+        }
+
+    ul.subMenu li span {
+        padding: 3px 3px 3px 6px;
+        border: none;
+        text-decoration: none;
+        text-align: left;
+        display: block;
+    }
+
+        ul.subMenu li span:hover {
+            background-color: #f8f8f8;
+            color: #990033;
+        }
+
+/* ListView styles */
+table.listView {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+tr.listViewPaginationTdS1 {
+}
+
+    tr.listViewPaginationTdS1 > td {
+        border: none !important;
+    }
+
+table.listView th, tr.listViewThS1 {
+    height: 31px;
+    background-color: #f5f5f5;
+    border-top: 3px solid #cccccc;
+}
+
+table.listView td {
+    height: 30px;
+    border: solid #cccccc 1px;
+}
+
+    table.listView td a:link, table.listView td a:visited, a.listViewThLinkS1:link, a.listViewThLinkS1:visited {
+        color: #018ccd;
+    }
+
+.listViewThS1 td {
+    height: 35px;
+    border: solid #cccccc 1px;
+    background-color: #f5f5f5;
+    text-align: center;
+    font-weight: bold;
+}
+
+.listViewThS1 a {
+    color: #38404d !important;
+}
+
+    .listViewThS1 a:hover {
+        text-decoration: none;
+    }
+
+
+
+.pageNumbers {
+    vertical-align: 0.3em;
+}
+
+table.listview th a:hover, a.listViewThLinkS1:hover {
+    color: #990033;
+}
+
+tr.oddListRowS1 {
+    background-color: white;
+}
+
+tr.evenListRowS1 {
+    background-color: white;
+}
+
+#ctl00_cntBody_ctlListView_updatePanel td,#ctl00_cntBody_ctlListView_updatePanel2 td,
+#ctl00_cntBody_ctlDetailView_updatePanel td {
+    font-size:13px; 
+}
+
+tr.oddListRowS1, tr.evenListRowS1 {
+    padding: 2px 8px 4px 5px;
+    border-bottom: 1px dashed #cccccc;
+    vertical-align: middle;
+    height: 35px;
+    text-align:center;
+}
+
+    tr.oddListRowS1:hover, tr.evenListRowS1:hover {
+        background: #f8f8f8;
+    }
+
+td.listViewTdLinkS1 {
+    padding-left: 13px;
+}
+
+.listViewCenter {
+    text-align: center;
+}
+
+.listViewRight {
+    padding-right: 13px;
+    text-align: right;
+}
+
+a.listViewTdLinkS1:link, a.listViewTdLinkS1:visited {
+    color: #990033;
+    text-decoration: none;
+}
+
+a.listViewTdLinkS1:hover {
+    color: #000000;
+    text-decoration: underline;
+}
+
+a.listViewTdToolsS1:link, a.listViewTdToolsS1:visited, a.listViewTdToolsS1:hover {
+    text-decoration: none;
+}
+
+a.listViewCheckLink:link, a.listViewCheckLink:visited {
+    font-size: 13px;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+a.listViewCheckLink:hover {
+}
+
+/* EditView styles */
+/* 12/02/2010 Paul.  We use the tabForm in a panel. */
+.tabForm {
+    /* border: 1px solid #e1e1e1;*/
+    padding: 10px 5px 13px 10px;
+    /*background-color: #f4f4f4;*/
+    font-size: 13px;
+    color: #999999;
+}
+
+table.tabForm td ul li {
+    margin-bottom: 10px;
+    list-style-type: none;
+}
+
+table.tabSearchForm {
+    /*
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 5px;
+    
+   
+    border-bottom: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    background-color: #fbfbfb;
+    color: #018ccd;
+    font-size: 14px;
+     */
+}
+
+    table.tabSearchForm td ul li {
+        margin-bottom: 10px;
+        list-style-type: none;
+    }
+
+table.tabEditView {
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    table.tabEditView td {
+        border: inherit;
+    }
+
+    table.tabEditView th {
+        margin-top: 0px;
+        padding-left: 0px;
+        padding-top: 0px;
+        text-align: left;
+    }
+
+.dataLabel {
+    font-size: 13px;
+    height: 34px;
+    color:#333;
+}
+
+.dataField {
+    font-size: 13px;
+}
+
+/* DetailView styles */
+table.tabDetailView {
+    font-size: 13px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabDetailViewDL {
+    padding-left: 13px;
+    background-color: #dfe8ed;
+    font-size: 13px;
+    color: #000000;
+    border: 1px solid #cccccc;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.tabDetailViewDF {
+    padding-left: 13px;
+    background-color: #ffffff;
+    font-size: 13px;
+    border: 1px solid #cccccc;
+    vertical-align: middle;
+}
+
+a.tabDetailViewDFLink:link, a.tabDetailViewDFLink:visited {
+    color: #000000;
+    text-decoration: underline;
+}
+
+a.tabDetailViewDFLink:hover {
+    color: #000000;
+}
+
+table.tabDetailView2 {
+    border-left: 1px solid #999999;
+    border-right: 1px solid #999999;
+    border-top: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+    border-collapse: collapse;
+    background-color: #cccccc;
+    width: 100%;
+}
+
+.tabDetailViewDL2 {
+    padding: 3px 6px 4px 6px;
+    background-color: #eeeeee;
+    font-size: 13px;
+    font-weight: normal;
+    color: #000000;
+    vertical-align: middle;
+}
+
+.tabDetailViewDF2 {
+    padding: 4px 10px 4px 6px;
+    background-color: #fafafa;
+    font-size: 13px;
+    font-weight: normal;
+    color: #444444;
+    vertical-align: middle;
+}
+
+a.tabDetailViewDL2Link:link, a.tabDetailViewDL2Link:visited {
+    color: #444444;
+    text-decoration: underline;
+}
+
+table.tabSearchView {
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+/* LeftColumn (NewRecord) styles */
+table.leftColumnModuleHead th {
+    padding-top: 4px;
+    padding-left: 6px;
+    padding-bottom: 4px;
+    border-top: 1px solid #999999;
+    background-color: #ffffff;
+    background-repeat: repeat-x;
+    background-position: top;
+    color: #444444;
+    text-align: left;
+}
+
+.leftColumnModuleName {
+    padding-top: 4px;
+    padding-left: 3px;
+    padding-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.leftColumnModuleS3 {
+    padding: 8px 8px 5px 8px;
+    border-bottom: 1px solid #cccccc;
+    background-color: #fff;
+    background-repeat: repeat-x;
+    background-position: bottom;
+    font-size: 13px;
+    color: #444444;
+}
+
+    .leftColumnModuleS3 input, .leftColumnModuleS3 select {
+        margin-top: 2px;
+        margin-bottom: 4px;
+    }
+
+td.leftColumnModuleS3 .button {
+    padding-top: 0px;
+    font-size: 13px;
+    vertical-align: bottom;
+}
+
+.leftColumnModuleS3 td {
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+    font-size: 13px;
+    vertical-align: bottom;
+}
+
+/* SearchTab styles */
+ul.tablist {
+    margin: 0px 0px 0px 0px;
+    padding-top: 3px;
+    padding-left: 0px;
+    padding-bottom: 3px;
+    padding-right: 0px;
+    border-bottom: 1px solid #999999;
+    font-size: 13px;
+}
+
+    ul.tablist li {
+        margin: 0px 0px 0px 0px;
+        list-style: none;
+        display: inline;
+    }
+
+        ul.tablist li a {
+            margin: 0px 0px 0px 0px;
+            padding: 3px 8px 3px 8px;
+            border-top: 1px solid #cccccc;
+            border-right: 1px solid #cccccc;
+            border-bottom: none;
+            background-color: #ffffff;
+            background-image: none;
+            background-repeat: repeat-x;
+            background-position: top;
+            text-decoration: none;
+        }
+
+            ul.tablist li a:link, ul.tablist li a:visited {
+                color: #444444;
+                text-decoration: none;
+            }
+
+            ul.tablist li a:hover {
+                border-top: 1px solid #999999;
+                background-color: #fafafa;
+                background-image: none;
+                background-repeat: repeat-x;
+                background-position: bottom;
+                color: #990033;
+            }
+
+            ul.tablist li a.current, ul.tablist li a.current:hover {
+                border-bottom: 1px solid #dddddd;
+                background-repeat: repeat-x;
+                background-position: bottom;
+                font-weight: bold;
+            }
+
+            ul.tablist li a.current {
+                border-right-color: #999999;
+            }
+
+                ul.tablist li a.current:hover {
+                    background-image: none;
+                    color: #990033;
+                }
+
+/* Footer styles */
+.footer {
+    height: 20px;
+}
+
+a.footerLink:link, a.footerLink:visited {
+    text-decoration: none;
+}
+
+a.footerLink:hover {
+    color: #990033;
+    text-decoration: underline;
+}
+
+.footerHR {
+    color: #666666;
+}
+
+/* LastViewed styles */
+.lastView {
+    padding-top: 3px;
+    padding-left: 10px;
+    padding-bottom: 3px;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #999999;
+    background-color: #eeeeee;
+    color: #444444;
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.lastViewLink, a.lastViewLink:link, a.lastViewLink:visited {
+    padding: 2px 5px 2px 5px;
+    border-left: 1px solid #cccccc;
+    color: #444444;
+    text-decoration: none;
+}
+
+a.lastViewLink:hover {
+    background-color: #ffffff;
+    color: #990033;
+}
+
+/* Tab Menu */
+table.tabFrame {
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.tabToolbarFrame {
+    border: none;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    height: 45px;
+    width: 100%;
+}
+
+.tabRow {
+    background-color: #FFD14E;
+    height: 20px;
+}
+
+.currentTab {
+    padding: 10px 15px 0px 15px;
+    background-color: #FFBB19;
+    font-size: 15px;
+    height: 37px;
+    line-height: 10px;
+}
+
+a.currentTabLink:link, a.currentTabLink:visited, a.currentTabLink:hover {
+    text-decoration: none;
+}
+
+a.currentTabLink:link, a.currentTabLink:visited {
+    color: #003564;
+}
+
+a.currentTabLink:hover {
+    color: #003564;
+}
+
+.otherQuickCreate {
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    padding: 10px 5px 0px 5px;
+    background-color: #FFD14E;
+    color: #003564;
+    font-size: 15px;
+    height: 37px;
+    line-height: 10px;
+}
+
+    .otherQuickCreate:hover {
+        background-color: #FFDC87;
+    }
+
+.otherUser {
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    padding: 10px 10px 0px 10px;
+    background-color: #FFD14E;
+    color: #003564;
+    font-size: 15px;
+    height: 37px;
+    line-height: 10px;
+}
+
+    .otherUser:hover {
+        background-color: #FFDC87;
+    }
+
+.otherHome {
+    padding: 0px 5px 0px 5px;
+    background-color: #FFD14E;
+    color: #003564;
+    width: 45px;
+    height: 45px;
+}
+
+    .otherHome:hover {
+        background-color: #FFDC87;
+    }
+
+.otherTab {
+    padding: 10px 15px 0px 15px;
+    background-color: #FFD14E;
+    color: #003564;
+    font-size: 15px;
+    height: 37px;
+    line-height: 10px;
+}
+
+    .otherTab:hover {
+        background-color: #FFDC87;
+    }
+
+a.otherTabLink:link, a.otherTabLink:visited {
+    text-decoration: none;
+    padding-top: 0px;
+}
+
+a.otherTabLink:hover {
+    text-decoration: none;
+}
+
+a.otherTabLink:link, a.otherTabLink:visited {
+    color: #003564;
+}
+
+a.otherTabLink:hover {
+    color: #003564;
+}
+
+.otherTabMoreLink, .otherTabMoreLink:link, .otherTabMoreLink:active, .otherTabMoreLink:visited, .otherTabMoreLink:hover {
+    padding: 1px 5px 1px 7px;
+    color: #636363;
+    text-decoration: none;
+    line-height: 22px;
+    display: block;
+    font-size: 13px;
+}
+
+    .otherTabMoreLink:hover, .otherTabMoreLink:active {
+        color: white;
+        background-color: #31597b;
+    }
+
+#subtabs {
+    border-bottom: 1px solid #999999;
+    background-repeat: repeat-x;
+    background-position: bottom;
+    height: 21px;
+}
+
+
+/* Header styles */
+.myArea, .welcome {
+    font-size: 13px;
+}
+
+a.myAreaLink:link, a.myAreaLink:visited, a.myAreaLink:hover {
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.subTabBar {
+}
+
+.searchField {
+    border: none;
+    background-color: #2a2f33;
+    color: #d4d5d6;
+    font-size: 13px;
+    height: 25px;
+    width: 155px;
+    padding-left: 10px;
+}
+
+
+    .searchField:focus {
+        background-color: #2a2f33;
+    }
+
+.searchButton, searchButton:focus {
+    cursor: pointer;
+    vertical-align: bottom;
+}
+
+a.utilsLink:link, a.utilsLink:visited {
+    padding-bottom: 3px;
+    font-size: 13px;
+    font-weight: normal;
+    text-decoration: none;
+    color: #999999;
+}
+
+a.utilsLink:hover {
+    text-decoration: underline;
+}
+
+a.listViewPaginationLinkS1:link, a.listViewPaginationLinkS1:visited {
+    padding: 2px 0px 3px 0px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #444444;
+    text-decoration: none;
+}
+
+.listViewPaginationTdS1 {
+    /*
+    padding: 1px 5px 2px 5px;
+    border: none;
+    background-color: #eeeeee;
+    font-size: 13px;
+    vertical-align: top;
+    color: #444444;
+    */
+}
+
+    .listViewPaginationTdS1 td {
+        /*background-color: #ffffff; */
+    }
+
+a.listViewPaginationLinkS1:hover {
+    color: #990033;
+    text-decoration: underline;
+}
+
+/* Popup Calendar */
+table.Calendar {
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-bottom: 2px solid #000000;
+    border-right: 2px solid #000000;
+    background-color: #c8d0d4;
+    font-size: 13px;
+    color: #000000;
+}
+
+table.CalendarTitle td {
+    padding: 1px 1px 1px 1px;
+    border: 1px solid #000000;
+    background: #788084;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+}
+
+th.CalendarDayHeader {
+    padding: 2px 2px 2px 2px;
+    border-bottom: 1px solid #000000;
+    background-color: #e8f0f4;
+    text-align: center;
+}
+
+td.CalendarDay {
+    padding: 2px 4px 2px 2px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: right;
+    width: 2em;
+}
+
+td.CalendarWeekendDay {
+    color: #ff0000;
+}
+
+td.CalendarOtherMonthDay {
+    background-color: #e8f0f4;
+}
+
+td.CalendarToday {
+    font-weight: bold;
+    color: #0000ff;
+}
+
+/* Calendar View styles */
+table.monthBox {
+    font-size: 13px;
+}
+
+table.monthHeader {
+    margin-top: 10px;
+    border-top: 1px solid #999999;
+    background-color: #ffffff;
+    background-repeat: repeat-x;
+    background-position: top;
+    color: #444444;
+    height: 25px;
+}
+
+td.monthHeaderPrevTd {
+    padding-left: 5px;
+}
+
+td.monthHeaderNextTd {
+    padding-right: 5px;
+}
+
+.monthHeaderH3 {
+    margin-bottom: 3px;
+    padding-top: 3px;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+a.NextPrevLink:link, a.NextPrevLink:visited, a.NextPrevLink:hover {
+    color: #990033;
+    text-decoration: none;
+}
+
+td.monthCalBody {
+    background-color: #dddddd;
+}
+
+td.dailyCalBodyTime {
+    padding: 7px 7px 7px 7px;
+    border-color: #dddddd;
+    background-color: #f6f6f6;
+    color: #000000;
+    vertical-align: top;
+    height: 20px;
+}
+
+td.dailyCalBodyItems {
+    padding: 5px 5px 5px 5px;
+    background-color: #ffffff;
+    font-size: 13px;
+    color: #444444;
+    text-align: left;
+}
+
+a.weekCalBodyDayLink:link, a.weekCalBodyDayLink:visited {
+    color: #000000;
+}
+
+table.monthFooter {
+}
+
+.monthFooterPrev, .monthFooterNext {
+    padding: 3px 7px 3px 7px;
+    background-color: transparent;
+}
+
+th.monthCalBodyTHDay {
+    padding: 5px;
+    border-top: 1px solid #cccccc;
+    background-color: #eeeeee;
+    color: #444444;
+}
+
+.monthCalBodyWeekDay {
+    padding: 3px 3px 3px 3px;
+    background-color: #ffffff;
+    text-align: right;
+}
+
+.monthCalBodyWeekEnd {
+    padding: 3px 3px 3px 3px;
+    background-color: #f6f6f6;
+    color: #444444;
+    text-align: right;
+}
+
+.monthCalBodyTodayWeekDay, .monthCalBodyTodayWeekEnd {
+    padding: 3px 3px 3px 3px;
+    border: 1px solid #990033;
+    background-color: #ffffff;
+    color: #444444;
+    text-align: right;
+}
+
+a.monthCalBodyWeekDayDateLink:link, a.monthCalBodyWeekDayDateLink:visited {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+a.monthCalBodyDayItemLink:link, a.monthCalBodyDayItemLink:visited, a.monthCalBodyDayItemLink:hover {
+    font-size: 10px;
+}
+
+.monthCalBodyDayItem {
+    margin: 7px 0px 7px 0px;
+    padding: 5px 0px 8px 0px;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #dddddd;
+    background-color: #ffffff;
+}
+
+.monthCalBodyDayItemTd {
+    vertical-align: top;
+}
+
+.monthCalBodyDayIconTd {
+    padding-right: 3px;
+    vertical-align: top;
+}
+
+.dailyCalBodyItems {
+    padding: 5px 5px 5px 5px;
+    background-color: #ffffff;
+    font-size: 13px;
+    color: #444444;
+    text-align: left;
+}
+
+.yearCalBodyMonth {
+    padding-top: 5px;
+}
+
+a.yearCalBodyMonthLink:link, a.yearCalBodyMonthLink:visited {
+    margin-bottom: 5px;
+    padding: 5px 5px 5px 5px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+a.yearCalBodyMonthLink:hover {
+    text-decoration: underline;
+}
+
+.dateFormat {
+    font-size: 13px;
+    font-weight: normal;
+    font-style: italic;
+}
+
+/* Chart styles */
+table.chartForm {
+    padding: 5px 5px 5px 5px;
+    border: 1px solid #999999;
+    background-color: #efefef;
+}
+
+    table.chartForm td {
+        background-color: #efefef;
+    }
+
+a.chartToolsLink:link, a.chartToolsLink:visited {
+    font-size: 13px;
+    font-weight: normal;
+    color: #444444;
+    text-decoration: none;
+}
+
+a.chartToolsLink:hover {
+    color: #990033;
+    text-decoration: none;
+}
+
+.chartFootnote {
+    font-size: 13px;
+}
+
+.tm {
+    font-size: 8px;
+    font-family: Verdana;
+}
+
+h5.listViewSubHeadS1 {
+    margin-bottom: 2px;
+    padding-left: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.rssItemDate {
+    font-size: 13px;
+    color: #666666;
+}
+
+/* Scheduler styles */
+.schedulerDiv {
+    margin-top: 0px;
+    border-bottom: 1px solid #999999;
+    border-collapse: collapse;
+    background-color: #fafafa;
+    font-size: 13px;
+    color: #000000;
+    text-align: left;
+    width: 100%;
+}
+
+.schedulerTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.schedulerTable td {
+    height: 18px;
+}
+
+.schedulerTopRow, .schedulerDeleteHeaderCell, .schedulerAttendeeHeaderCell, .schedulerAttendeeHeaderCell {
+    border-bottom: 1px solid #dddddd;
+    height: 22px;
+}
+
+.schedulerTimeCell, .schedulerAttendeeDeleteCell {
+    padding-left: 4px;
+    border-left: 1px solid #dddddd;
+}
+
+.schedulerAttendeeCell {
+    padding-left: 4px;
+    border-bottom: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    overflow: hidden;
+    width: 125px;
+}
+
+.schedulerSlotCellStartTime {
+    padding: 0px 0px 0px 0px;
+    border-top: 1px solid #dddddd;
+    border-left: 4px solid #75af4f;
+    border-bottom: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    background-color: #eeeeee;
+    width: 15px;
+}
+
+.schedulerSlotCellEndTime {
+    padding: 0px 0px 0px 0px;
+    border-top: 1px solid #dddddd;
+    border-left: 4px solid #ff0000;
+    border-bottom: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    background-color: #eeeeee;
+    width: 15px;
+}
+
+.schedulerSlotCellHour {
+    padding: 0px 0px 0px 0px;
+    border: 1px solid #dddddd;
+    background-color: #eeeeee;
+    width: 15px;
+}
+
+.schedulerTopDateCell {
+    margin-top: 10px;
+    padding: 2px 5px 2px 5px;
+    border-top: 1px solid #999999;
+    background-color: #ffffff;
+    background-repeat: repeat-x;
+    background-position: top;
+    font-size: 13px;
+    font-weight: bold;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.contentBox {
+    margin: 10px 0px 10px 0px;
+    padding: 0px 10px 0px 0px;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+}
+
+.ToolbarShadingTable {
+    width: 80%;
+    border: 1px solid #9c9c9c;
+}
+
+.ToolbarInnerTable {
+    width: 100%;
+    border: 1px solid #9c9c9c;
+    background-color: White;
+    padding: 8px 8px 8px 8px;
+}
+
+.ToolbarInnerTableCell {
+    padding-top: 10px;
+    padding-bottom: 6px;
+    padding-left: 10px;
+    padding-right: 25px;
+}
+
+.ModuleActionsShadingTable {
+    width: 400px;
+    border: 1px solid #9c9c9c;
+}
+
+.ModuleActionsShadingHorizontal {
+    height: 16px;
+    background-color: #b6b6b6;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+
+.ModuleActionsShadingVertical {
+    width: 16px;
+    background-color: #b6b6b6;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+
+.ModuleActionsInnerTable {
+    width: 600px;
+    border-left: 1px solid #9c9c9c;
+    border-right: 1px solid #9c9c9c;
+    border-bottom: 1px solid #9c9c9c;
+    background-color: White;
+    -moz-box-shadow: 0 5px 5px #888;
+    -webkit-box-shadow: 0 5px 5px #888;
+    box-shadow: 0 5px 5px #888;
+}
+
+.ModuleActionsInnerCell {
+    width: 33%;
+    vertical-align: top;
+    padding: 8px 8px 8px 8px;
+    border-left: solid 1px #cecece;
+}
+
+.ModuleActionsInnerHeader {
+    font-size: 10pt;
+    color: #9c9c9c;
+    display: block;
+}
+
+.ModuleActionsMenuItems, .ModuleActionsMenuItems:link, .ModuleActionsMenuItems:active, .ModuleActionsMenuItems:visited, .ModuleActionsMenuItems:hover {
+    padding: 1px 5px 1px 7px;
+    color: #636363;
+    text-decoration: none;
+    line-height: 22px;
+    display: block;
+    font-size: 13px;
+}
+
+    .ModuleActionsMenuItems:hover, .ModuleActionsMenuItems:active {
+        color: white;
+        background-color: #31597b;
+    }
+
+.MoreActionsShadingTable {
+    width: 200px;
+    border: 1px solid #9c9c9c;
+}
+
+.MoreActionsInnerTable {
+    width: 200px;
+    border-left: 1px solid #9c9c9c;
+    border-right: 1px solid #9c9c9c;
+    border-bottom: 1px solid #9c9c9c;
+    background-color: White;
+    -moz-box-shadow: 0 5px 5px #888;
+    -webkit-box-shadow: 0 5px 5px #888;
+    box-shadow: 0 5px 5px #888;
+}
+
+.MoreActionsInnerCell {
+    vertical-align: top;
+    padding: 8px 8px 8px 8px;
+    border-left: solid 1px #cecece;
+}
+
+.otherTabMoreArrow {
+    vertical-align: middle;
+}
+
+/* 11/26/2010 Paul.  Add styles for the Check All hover. */
+.ActionMenu {
+    border: 1px solid #999999;
+    background-color: #f6f6f6;
+}
+
+.ActionMenuItem {
+    padding: 1px 5px 1px 7px;
+    color: #000000;
+    line-height: 18px;
+    width: 120px;
+    text-align: left;
+    border-bottom: 1px solid #999999;
+}
+
+    .ActionMenuItem:hover {
+        background-color: #fdfdfd;
+    }
+
+a.ActionMenuLink:link, a.ActionMenuLink:active, a.ActionMenuLink:visited, a.ActionMenuLink:hover {
+    color: #000000;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.SixToolbar {
+    width: 100%;
+    height: 45px;
+    background-color: #FFD14E;
+    color: #003564;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    _position: absolute;
+    _top: expression( ie6 = (document.documentElement.scrollTop + "px") );
+}
+
+.SixToolbarUser {
+    height: 45px;
+    background-color: #FFD14E;
+    color: #003564;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    _position: absolute;
+    _top: expression( ie6 = (document.documentElement.scrollTop + "px") );
+}
+/* 11/06/2013 Paul.  Add support for RTL languages. */
+.SixToolbarUserRTL {
+    height: 45px;
+    background-color: #FFD14E;
+    color: #003564;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    _position: absolute;
+    _top: expression( ie6 = (document.documentElement.scrollTop + "px") );
+}
+
+/* 05/23/2010 Paul.  New styles for the EmailClient.  */
+/* 05/23/2010 Paul.  The TreeView has a bug that forces 1em, so we need to use 1em to prevent the size from switching. */
+a.nodeEmailFolderLink {
+    text-decoration: none;
+    font-size: 1em;
+}
+
+a.leafEmailFolderLink, a.leafEmailFolderLink:visited, a.leafEmailFolderLink:hover {
+}
+
+a.parentEmailFolderLink, a.parentEmailFolderLink:visited, a.parentEmailFolderLink:hover {
+}
+
+a.selectedEmailFolderLink, a.selectedEmailFolderLink:visited, a.selectedEmailFolderLink:hover {
+    background-color: #CCCCCC;
+}
+
+a.nodeStudioFolderLink {
+    text-decoration: none;
+    font-size: 1em;
+}
+
+a.leafStudioFolderLink, a.leafStudioFolderLink:visited, a.leafStudioFolderLink:hover {
+}
+
+a.parentStudioFolderLink, a.parentStudioFolderLink:visited, a.parentStudioFolderLink:hover {
+}
+
+a.selectedStudioFolderLink, a.selectedStudioFolderLink:visited, a.selectedStudioFolderLink:hover {
+    background-color: #CCCCCC;
+}
+
+.EmailDetailViewDL {
+    padding: 2px 4px 2px 4px;
+    background-color: #f6f6f6;
+    font-size: 13px;
+    vertical-align: top;
+    text-align: right;
+    font-weight: bold;
+    color: #9C9A9C;
+}
+
+.EmailDetailViewDF {
+    padding: 2px 4px 2px 4px;
+    background-color: #f6f6f6;
+    font-size: 13px;
+    vertical-align: top;
+    text-align: left;
+    color: #000000;
+}
+
+.jQueryDragHandle {
+    background-image: url(images/draghandle_list.gif);
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+tr.jQueryDragBorder td {
+    background-color: #d6d6d6;
+}
+
+.pointer {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 8px;
+    padding-right: 8px;
+    line-height: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #666666;
+}
+/* 01/07/2013 Paul.  Need to prevent a nowrap style from getting inherited. */
+.ListViewInfoHover {
+    width: 300px;
+    border: 1px solid #9c9c9c;
+    background-color: White;
+    white-space: normal;
+}
+
+.PanelHoverHidden {
+    display: none;
+    visibility: hidden;
+}
+/* 08/28/2010 Paul.  Moved from Jigsaw control. */
+.buttonLogin {
+    border: 1px solid #444444;
+    font-size: 13px;
+    color: #ffffff;
+    background-color: #666666;
+    font-weight: bold;
+}
+
+/* 09/20/2010 Paul.  Restore ACL styles. */
+.aclAll {
+    color: Green;
+    font-weight: bold;
+}
+
+.aclOwner {
+    color: Black;
+    font-weight: bold;
+}
+
+.aclNone {
+    color: Red;
+    font-weight: bold;
+}
+
+.aclEnabled {
+    color: Green;
+    font-weight: bold;
+}
+
+.aclDisabled {
+    color: Red;
+    font-weight: bold;
+}
+
+.aclNormal {
+    color: Green;
+    font-weight: bold;
+}
+
+.modalBackground {
+    background-color: Gray;
+    filter: alpha(opacity=70);
+    opacity: 0.7;
+}
+
+.modalPopup {
+    background-color: White;
+    border-width: 3px;
+    border-style: solid;
+    border-color: Gray;
+    padding: 3px;
+    width: 400px;
+}
+
+.PasswordHelp {
+    background-image: url(images/help.gif);
+    height: 16px;
+    width: 16px;
+}
+
+.overdueTask {
+    color: Red;
+}
+
+.futureTask {
+    color: Green;
+}
+
+
+
+/* ----- Begin ----- */
+/* ----- End ----- */
+
+#accordion a {
+    color: #666;
+}
+
+.listTitle {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.search_bar {
+    float: right;
+    position: relative;
+    width: 100%;
+}
+
+
+    .search_bar .search_box {
+        width: 100%;
+        border: 1px solid #dcdcdc;
+        height: 32px;
+        padding-left: 16px;
+        padding-right:40px;
+        color:grey;
+    }
+
+    .search_bar .btn_search {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        cursor: pointer;
+    }
+
+
+.nav2 {
+    /*margin-bottom: 20px;*/
+}
+
+.listViewPaginationTdS1 > td {
+    padding-top: 15px;
+}
+
+
+.listViewPaginationTdS1 img {
+    vertical-align: top;
+}
+
+.formStyle {
+    width: 100%;
+}
+
+    .formStyle .dataLabel {
+        color: black;
+        height: 29px;
+        width: 75px;
+        text-align: right;
+    }
+
+    .formStyle .dataField {
+        color: #666;
+    }
+
+.menuGroup {
+    display: none;
+}
+
+    .menuGroup.active {
+        display: block;
+    }
+
+#headingOne .panel-title > a,
+#headingTwo .panel-title > a,
+#headingThree .panel-title > a,
+#headingFour .panel-title > a,
+#headingFive .panel-title > a {
+    color: black;
+   
+}
+
+#collapseOne .nav > li > a,
+#collapseTwo .nav > li > a,
+#collapseThree .nav > li > a,
+#collapseFour .nav > li > a {
+ padding-left:25px;
+}
+
+#collapseOne .nav > li > a.active,
+#collapseTwo .nav > li > a.active,
+#collapseThree .nav > li > a.active,
+#collapseFour .nav > li > a.active,
+#collapseFive .nav > li > a.active {
+    background-color: #ff6400;
+    color: white;
+}
+
+#collapseOne .nav > li > a.active .colorRed,
+#collapseTwo .nav > li > a.active .colorRed,
+#collapseThree .nav > li > a.active .colorRed,
+#collapseFour .nav > li > a.active .colorRed,
+#collapseFive .nav > li > a.active .colorRed {
+    color: white;
+}
+
+#collapseOne > .panel-body,
+#collapseTwo > .panel-body,
+#collapseThree > .panel-body,
+#collapseFour > .panel-body,
+#collapseFive > .panel-body {
+    padding: 0px;
+}
+
+#ordertop {
+    width: 945px;
+    height: 154px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 16px;
+}
+
+.ordertopleft {
+    float: left;
+    width: 600px;
+    height: 154px;
+}
+
+.ordertopright {
+    float: right;
+    width: 334px;
+    height: 154px;
+    background-color: #f7f7f7;
+    border-left: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.headportrait {
+    float: left;
+    width: 160px;
+    height: 154px;
+}
+
+.headportrait1 {
+    margin-top: 25px;
+    margin-left: 35px;
+    width: 98px;
+    height: 98px;
+    border-radius: 15px;
+}
+
+.personalinfo {
+    float: right;
+    width: 434px;
+    height: 154px;
+}
+
+.telno {
+    width: 434px;
+    height: 60px;
+}
+
+.telnumber {
+    padding-top: 30px;
+    font-size: 16px;
+    font-family: 'Microsoft YaHei';
+    font-weight: 900;
+    color: #111111;
+}
+
+.telgreet {
+    font-size: 13px;
+    font-family: Î¢ÈíÑÅºÚ;
+    font-weight: 200;
+    color: #797979;
+}
+
+.datacompeletion {
+    width: 434px;
+    height: 31px;
+}
+
+.datacomleft {
+    height: 31px;
+    padding-left: 15px;
+    padding-top: 8px;
+    float: left;
+    width: 100px;
+    font-size: 13px;
+    color: #797979;
+    text-align: center;
+}
+
+#completitionline {
+    float: right;
+    margin-right: 54px;
+    margin-left: 0px;
+    width: 280px;
+    height: 31px;
+}
+
+.completitionline {
+    padding-top: 8px;
+    float: left;
+    width: 200px;
+    height: 31px;
+}
+
+.completitionline1 {
+    float: left;
+    width: 70px;
+    height: 15px;
+    color: #fff;
+    text-align: center;
+    background-color: #ff6302;
+}
+
+.completitionline2 {
+    margin-right: 10px;
+    float: right;
+    width: 120px;
+    height: 15px;
+    background-color: #dddddd;
+}
+
+.complete {
+    position: relative;
+    float: right;
+    width: 65px;
+    height: 31px;
+    font-size: 13px;
+    color: #3485d4;
+    padding-top: 8px;
+    margin-right: 55px;
+}
+
+.accountsecurity {
+    width: 434px;
+    height: 30px;
+}
+
+.securitylevel {
+    margin-left: -100px;
+    float: left;
+    width: 100px;
+    height: 30px;
+    font-size: 14px;
+    font-family: 'Microsoft YaHei';
+    font-weight: 800;
+    color: #797979;
+    padding-top: 8px;
+}
+
+.securitylevelright {
+    float: right;
+    margin-right: 10px;
+    width: 322px;
+    height: 30px;
+}
+
+.securityleveltxt {
+    font-size: 14px;
+    float: left;
+    width: 20px;
+    height: 30px;
+    color: #ef6d0d;
+    padding-top: 8px;
+}
+
+.securitylevelright2 {
+    float: right;
+    margin-right: 50px;
+    width: 210px;
+    height: 30px;
+}
+
+.securitylevelimg {
+    float: left;
+    width: 42px;
+    height: 30px;
+}
+
+.securitylevelimg1 {
+    float: left;
+    width: 18px;
+    height: 30px;
+    margin-top:3px;
+}
+
+.securitylevelimg2 {
+    float: right;
+    width: 20px;
+    height: 30px;
+    margin-top:3px;
+}
+
+.securitylevela {
+    padding-top: 9px;
+    float: right;
+    margin-right: -6px;
+    width: 65px;
+    height: 30px;
+}
+
+.ordertoprightsmall {
+    margin: 10px auto;
+    width: 300px;
+    height: 140px;
+}
+
+.infotitle {
+    width: 300px;
+    height: 40px;
+    border-bottom: dashed 1px #dcdcdc;
+}
+
+.myinfo {
+    float: left;
+    width: 94px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 900;
+    padding-top: 8px;
+}
+
+.myinfoimg {
+    width: 28px;
+    height: 38px;
+}
+
+.allinfo {
+    float: right;
+    padding-top: 13px;
+    width: 60px;
+    height: 40px;
+}
+
+.allinfo a {
+    font-size:13px;
+    color:#999999;
+}
+.allinfo a:hover {
+    color:#0065e6;
+}
+.concreteinfo {
+    width: 300px;
+    height: 94px;
+    margin-top: 6px;
+}
+
+.concreteinfo1 {
+    width: 300px;
+    height: 23px;
+}
+
+.concreteinfo1left {
+    float: left;
+    width: 206px;
+    height: 20px;
+    overflow:hidden;
+    color: #ff6400;
+    font-size: 13px;
+}
+
+.concreteinfo1right {
+    float: right;
+    width: 74px;
+    height: auto;
+    font-size: 13px;
+    color: #797979;
+}
+
+#myordertitle {
+    width: 940px;
+    height: 26px;
+    font-size: 18px;
+    font-family: 'Microsoft YaHei';
+    font-weight: 900;
+    color: #161616;
+}
+
+.myorderstatus {
+    width: 944px;
+    height: 40px;
+    border-top: 1px solid #e4e4e4;
+    border-left: 1px solid #e4e4e4;
+    border-right: 1px solid #e4e4e4;
+    position: relative;
+    bottom: -3px;
+    padding-left:5px;
+}
+
+.orderTab {
+    width: 110px;
+    height: 40px;
+    font-size: 15px;
+    color: #7a7a7a;
+    float: left;
+    text-align: center;
+    padding-top: 6px;
+    margin-top:6px;
+}
+
+    .orderTab.actived {
+        border-bottom: 4px solid #ff6400;
+        /*background-color:#ff6000;*/
+        color:#ff6400;
+    }
+
+.mysalescar {
+    width: 940px;
+    height: 1000px;
+}
+
+.salescartitle {
+    width: 940px;
+    height: 35px;
+    font-size: 16px;
+    font-family: 'Microsoft YaHei';
+    font-weight: 900;
+    color: #1f1f1f;
+}
+
+.productreleasebox {
+    width: 940px;
+    height: 840px;
+    border: 1px solid #e2e2e2;
+}
+
+.productrelease {
+    margin: auto;
+    width: 900px;
+    height: 800px;
+}
+
+.productreleasetitle {
+    height: 40px;
+    width: 900px;
+}
+
+.productreleasetitleleft {
+    float: left;
+    width: 82px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+    padding-top: 14px;
+}
+
+.productreleasetitleright {
+    width: 188px;
+    height: 40px;
+    text-align: right;
+    float: right;
+    color: #b8b8b8;
+    padding-top: 15px;
+    font-size: 13px;
+}
+
+.orderaddress {
+    width: 904px;
+    height: 900px;
+}
+
+.orderaddresstitle {
+    width: 904px;
+    height: 26px;
+    font-size: 16px;
+    font-family: 'Microsoft YaHei';
+    font-weight: 900;
+    color: #161616;
+}
+
+.orderdetailbox {
+    width: 904px;
+    height: 800px;
+}
+
+.orderdetail {
+    width: 875px;
+    height: 780px;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+.addresstop {
+    width: 875px;
+    height: 164px;
+}
+
+.ordernumber {
+    width: 875px;
+    height: 30px;
+}
+
+.ordernoleft {
+    width: 75px;
+    height: 30px;
+    font-size: 13px;
+    float: left;
+    color: #a7a7a7;
+    font-family: 'Microsoft YaHei';
+}
+
+.ordernoright {
+    color: #494949;
+    font-family: 'Microsoft YaHei';
+}
+
+.comname {
+    width: 875px;
+    height: 30px;
+}
+
+.comnameright {
+    color: #509af3;
+    font-family: 'Microsoft YaHei';
+}
+
+.orderproduct {
+    width: 875px;
+    height: 30px;
+}
+
+.orderprright {
+    color: #494949;
+    font-family: 'Microsoft YaHei';
+}
+
+.dealprice {
+    width: 875px;
+    height: 30px;
+}
+
+.dealpriceright {
+    color: #f06f1e;
+    font-weight: bold;
+    font-family: 'Microsoft YaHei';
+}
+
+.ordertime {
+    width: 875px;
+    height: 30px;
+}
+
+.ordertimeright {
+    color: #494949;
+    font-family: 'Microsoft YaHei';
+}
+
+.orderstatus {
+    width: 875px;
+    height: 30px;
+}
+
+.orderstright {
+    color: #f06f1e;
+    font-family: 'Microsoft YaHei';
+}
+
+.shipaddress {
+    margin-top: 11px;
+    width: 875px;
+    height: 200px;
+}
+
+.shippingtitle {
+    color: #ff670f;
+    font-size: 16px;
+    font-family: 'Microsoft YaHei';
+    padding-top: 5px;
+    font-weight: bold;
+}
+
+.detailaddress {
+    width: 875px;
+    height: 37px;
+    background-color: #ececec;
+    padding-top: 9px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.carinfo {
+    width: 875px;
+    height: 130px;
+    margin-top: 7px;
+}
+
+.carinfosame {
+    width: 280px;
+    height: 128px;
+    float: left;
+}
+
+.carinfo1 {
+    margin-left: 5px;
+}
+
+.carinfo2 {
+    margin-left: 10px;
+}
+
+.carinfo3 {
+    margin-left: 10px;
+}
+
+.detailcarinfobox {
+    width: 275px;
+    height: 92px;
+    margin-left: 5px;
+    border-radius: 8px;
+    border: 1px dotted;
+}
+
+.detailcarinfo {
+    width: 246px;
+    height: 66px;
+    margin-top: 8px;
+    margin-left: 13px;
+}
+
+.carinfotop {
+    width: 246px;
+    height: 15px;
+}
+
+.carinfotopleft {
+    float: left;
+    font-size: 15px;
+    color: #101010;
+    font-family: 'Microsoft YaHei';
+    font-weight: bold;
+}
+
+.carinfotopright {
+    float: right;
+    font-size: 15px;
+    color: #fa791b;
+    font-family: 'Microsoft YaHei';
+    font-weight: bold;
+}
+
+.carinfomiddle {
+    width: 246px;
+    height: 15px;
+    font-size: 15px;
+    color: #328efb;
+    margin-top: 11px;
+}
+
+.carinfobottom {
+    width: 246px;
+    height: 15px;
+    font-size: 15px;
+    margin-top: 11px;
+    color: #1b1b1b;
+}
+
+.viewbtn {
+    margin-top: 10px;
+    width: 88px;
+    height: 26px;
+    background-color: #ff610a;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 10px;
+    margin-left: 5px;
+    color: white;
+    border-radius: 3px;
+    border: 0;
+}
+
+#dynamicButtons {
+    margin-bottom: 10px;
+}
+
+
+
+.order_car {
+    width:32%;
+    float:left;
+    margin-bottom:15px;
+}
+
+.order_style1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.order_style2 {
+    padding: 8px 10px;
+    background-color: #e9e9e9;
+    color: black;
+    font-size: 14px;
+    margin-bottom: 5px;
+    float:left;
+    width:100%;
+  
+}
+
+.order_style2 .left{
+    float:left;
+}
+
+.order_style2 .right{
+    float:right
+}
+
+.order_car_content {
+    border: 2px dotted #dcdcdc;
+    position: relative;
+    padding: 10px;
+    margin: 5px 10px;
+    font-size: 14px;
+}
+
+.order_car_style1 {
+    color: black;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.order_car_style2 {
+    color: #48ade3;
+    margin-bottom: 5px;
+}
+
+.order_car_style3 {
+    color: black;
+}
+
+.order_car_style4 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.order_car .btnRed {
+    width: 100px;
+    margin-top: 10px;
+    margin-left: 8px;
+}
+
+.clearBoth {
+clear:both;
+}
+
+.colorRed {
+    color:red;
+}
+
+.colorGray {
+    color:#666;
+}
+
+.colorBlack {
+    color:black;
+}
+
+.delivery1 {
+    width:855px;
+    height:auto;
+    min-height:50px;
+}
+.checkbox {
+    border:2px groove #e8e8e8;
+    height:30px;
+    width:855px;
+    font-size:13px;
+    color:#565656;
+    padding-left:11px;
+    margin-bottom:13px;
+    margin-top:15px;
+    padding-top:6px;
+}
+
+.delivery2{
+    width: 855px; 
+    height: 320px; 
+    margin-top:25px;
+}
+.delivery2add{
+    font-size: 16px; 
+    font-family: 'Microsoft YaHei UI';
+    color: #000000; 
+    width: 855px; 
+    height: 17px; 
+    font-weight: 800;
+}
+.delivery2 > .form-group {
+    margin-left:-70px;
+}
+.editphone {
+    width:70px;
+    height:18px;
+    float:right; 
+    cursor:pointer;
+    margin-right:280px;
+    color:#0065e6;
+}
+#myAccount_view a.editphone:hover {
+    color:#0065e6;
+}

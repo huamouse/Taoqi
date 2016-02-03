@@ -1,0 +1,22 @@
+<%@ Master Language="C#" AutoEventWireup="false" %>
+
+<!-- 该页面为一些在需要有多个form的需求页面服务 -->
+
+<!DOCTYPE HTML>
+<html id="htmlRoot" runat="server">
+<head>
+	<%@ Register TagPrefix="Taoqi" Tagname="MetaHeader" Src="~/_controls/MetaHeader.ascx" %>
+	<Taoqi:MetaHeader ID="ctlMetaHeader" Runat="Server" />
+</head>
+<body>
+<form id="frmMain" method="post" runat="server">
+
+<ajaxToolkit:ToolkitScriptManager ID="mgrAjax" CombineScripts="true" EnableScriptGlobalization="true" EnableScriptLocalization="false" ScriptMode="Release" runat="server" />
+	<asp:ContentPlaceHolder ID="cntSidebar" runat="server" />
+	
+	<asp:ContentPlaceHolder ID="cntBody" runat="server" />
+</form>
+</body>
+</html>
+
+

@@ -1,0 +1,53 @@
+﻿<!DOCTYPE HTML>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ueditor demo</title>
+</head>
+
+<body>
+    <!-- 加载编辑器的容器 -->
+    <script id="container" name="content" type="text/plain">
+        这里写你的初始化内容
+    </script>
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="ueditor.all.js"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var ue = UE.getEditor('container', {
+            toolbars: [
+                [
+                        'undo', //撤销
+                        'redo', //重做
+                        'formatmatch', //格式刷
+                        'removeformat', //清除格式
+                        'simpleupload' //单图上传
+                ],
+                [
+                        'underline', //下划线
+                        'strikethrough', //删除线
+                        'horizontal', //分隔线
+                        'forecolor', //字体颜色
+                        'backcolor', //背景色
+                        '|',
+                        'bold', //加粗
+                        'italic', //斜体
+                        'fontfamily', //字体
+                        'fontsize', //字号
+                        '|',
+                        'justifyleft', //居左对齐
+                        'justifyright', //居右对齐
+                        'justifycenter', //居中对齐
+                        'justifyjustify' //两端对齐
+                ]
+            ],
+            autoHeightEnabled: true,
+            autoFloatEnabled: true
+        });
+    </script>
+</body>
+
+</html>

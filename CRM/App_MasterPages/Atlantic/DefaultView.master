@@ -1,0 +1,425 @@
+<%@ Master Language="C#" AutoEventWireup="false" CodeBehind="DefaultView.master.cs" Inherits="Taoqi.Themes.Atlantic.DefaultView" %>
+
+<%@ Import Namespace="Taoqi" %>
+
+<%@ Register TagPrefix="Taoqi" TagName="MetaHeader" Src="~/_controls/MetaHeader.ascx" %>
+<%@ Register TagPrefix="Taoqi" TagName="Copyright" Src="~/_controls/Copyright.ascx" %>
+
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" id="htmlRoot" runat="server" ng-app="taoqiApp">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+    <title></title>
+    <Taoqi:MetaHeader ID="ctlMetaHeader" runat="Server" />
+
+    <link type="text/css" rel="stylesheet" href="~/include/javascript/jquery-ui-1.9.1.custom.css" runat="server" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="/css/site.css" rel="stylesheet" />
+
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.min.js" defer async="async"></script>
+      <script src="/js/respond.min.js" defer async="async"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="<%# Application["scriptURL"] %>ModulePopupScripts.aspx?LastModified=<%# Server.UrlEncode(Sql.ToString(Application["Modules.LastModified"])) + "&UserID=" + Security.USER_ID.ToString() %>"></script>
+    <%# Application["CONFIG.external_scripts"] %>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js" async="async"></script>
+    <script src="/js/bootstrap-datetimepicker.js"></script>
+    <script src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/angular-cookies.min.js"></script>
+    <script src="/js/angular-sanitize.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <script src="/js/site.js"></script>
+    <style>
+        #ctl00_lnkMyAccount {
+            color: #ff6400;
+        }
+        #navLinksLeft li select {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background: url(../App_Themes/Atlantic/images/dropdown.png) scroll right no-repeat;
+    }
+
+        #navLinksLeft li select::-ms-expand {
+            display: none;
+        }
+    </style>
+  <%--  <script src="/jquery.validate.js"></script>--%>
+
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.min.js" defer async="async"></script>
+      <script src="/js/respond.min.js" defer async="async"></script>
+    <![endif]-->
+</head>
+
+<body ng-controller="baseController" ng-init="InitByCookie()">
+    <div class="header" data-ng-init="GetBaseData()">
+        <!--顶部工具栏-->
+        <div class="header_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7" style="margin-top:2px;padding-left:0;padding-right:0;">
+                        <ul class="nav nav-pills" id="navLinksLeft">
+                            <li style="padding:8px 15px;color:#999999;">Hi，欢迎来淘气！</li>
+                            <li>
+                                <asp:HyperLink ID="lnkMyAccount" NavigateUrl="~/Users/PersonalInfo.aspx" runat="server" /></li>
+                            <!--<li ng-hide="!isLoginIn" ng-if="UserInfo.isCompany == 1">
+                                <select class="colorOrange headerSelect" ng-model="UserInfo.AccountID" style="padding-right:0px;" ng-change="getUserInfo()"
+                                        ng-options="item.ID as item.C_ClientName for item in Company"></select>
+                            </li>-->
+                            <li ng-hide="!isLoginIn" ng-if="UserInfo.isCompany == 1" class="topMenu hoverMenu">
+                                <label class="colorOrange headerSelect" data-ng-bind="UserInfo.CompanyName"></label>
+                                <div class="msg_panel dropdown-menu">
+                                    <div class="msg_panel_body" ng-repeat="item in Company">
+                                        <a href="#" ng-class="{SelectedAccount:UserInfo.AccountID===item.ID}" ng-click="ChangeAccount(item)">{{item.C_ClientName}}</a>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li ng-if="UserInfo.isCompany == 0">
+                                <div class="colorOrange headerSelect">个人客户</div>
+                            </li>
+                            <li class="topMenu hoverMenu" ng-controller="MessageController" ng-init="GetUnreadMessage()">
+                                <a href="#">未读消息（<span ng-bind="messageList.length"></span>）</a>
+                                <div class="msg_panel dropdown-menu">
+                                    <div class="msg_panel_head" ng-show="messageError">
+                                        <h2 class="msg_panel_title">未读新消息</h2>
+                                    </div>
+                                    <div>
+                                        <div class="msg_panel_body" ng-repeat="item in messageList | limitTo:5" ng-hide="messageError">
+                                            <a href="{{item.URL}}" ng-click="ReadMessage(item.ID)"><span data-ng-bind-html="item.Body" style="color:black;"></span></a>
+                                        </div>
+                                        <div class="msg_error" ng-show="messageError">
+                                            <p class="msg_error_notice">
+                                                <img width="23" height="14" alt="" src="/images/msg1.png" /><span>没有新消息了</span><img width="23" height="14" alt="" src="/images/msg2.png" />
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="msg_panel_foot">
+                                        <span class="J_Tmsg_Button_CheckAll_Wrap tmsg_button_check-all_wrap">
+                                            <a class="tmsg_button_check-all" href="/member/Message/">查看全部</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <asp:HyperLink ID="lnkLogout" Text='退出' NavigateUrl="~/Users/Logout.aspx"
+                                    Visible='<%# (!Taoqi.Security.IsWindowsAuthentication() || Taoqi.Security.IsImpersonating()) && Taoqi.Security.IsAuthenticated() %>' runat="server" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-5 hidden480">
+                        <ul class="nav nav-pills pull-right" id="navLinksRight">
+                            <li><a href="/member/">
+                                <div class="icon icon_my" style="margin-top:-3px;"></div>我的淘气网</a></li>
+
+                            <li class="topMenu hoverMenu" ng-if="UserInfo.isBuyer == 1">
+                                <a href="/member/Order/"><div class="icon icon_order" style="margin-top:-3px;"></div>我的订单</a>
+                            </li>
+                            <li class="topMenu hoverMenu" ng-if="UserInfo.isSeller == 1">
+                                <a href="/member/OrderSell/"><div class="icon icon_order" style="margin-top:-3px;"></div>已售订单</a>
+                            </li>
+                            <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=517517158&site=qq&menu=yes">
+                                <div class="icon icon_support" style="margin-top:-3px;"></div>
+                                在线客服</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--LOGO和搜索区域-->
+        <div class="header_middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <a href="/">
+                            <img src="/images/logo.png" class="logo" /></a><img src="/images/description.png" class="small480" style="vertical-align:bottom;margin-bottom:11px;margin-left:10px;"/>
+                    </div>
+
+                    <div class="col-md-7" style="padding-top: 13px;">
+                        <div class="row">
+                            <div class="col-md-7 col-md-offset-5">
+                                <a class="col-md-3" style="cursor:pointer;" href="../Quote/edit.aspx" ng-if="UserInfo.isBuyer == 1">
+                                    <img src="../App_Themes/Atlantic/images/fbqg.png" />
+                                    <span style="display:inline-block;margin-left:4px;margin-top:3px;color:#595959;">发布求购</span>
+                                </a>
+                                <a class="col-md-3" style="cursor:pointer;" href="../ProductSell/edit.aspx"  ng-if="UserInfo.isSeller == 1">
+                                    <img src="../App_Themes/Atlantic/images/fbqy.png" />
+                                    <span style="display:inline-block;margin-left:4px;margin-top:3px;color:#595959;">发布气源</span>
+                                </a>
+                                <a class="col-md-3" style="padding-right:5px; cursor:pointer;" href="../TransitSell/edit.aspx" ng-if="UserInfo.isSeller == 1">
+                                    <img src="../App_Themes/Atlantic/images/fbztq.png" />
+                                    <span style="display:inline-block;margin-left:-2px;margin-top:3px;color:#595959;">发布在途气</span>
+                                </a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--导航菜单区域-->
+        <div class="navbar navbar-default header_bottom">
+            <div class="container">
+
+                <div class="row">
+
+                    <div id="menu1" class="col-md-2 category hidden480" style="padding-top: 13px; padding-bottom: 13px;">
+                        <a href="/member/"><span class="categoty_txt">我的淘气网</span></a>
+                    </div>
+
+                    <div class="col-md-10 clearPaddingLeft">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".menu" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+
+                        </div>
+
+                        <ul class="nav navbar-nav collapse navbar-collapse menu" id="menus">
+                            <li><a href="/">首页</a></li>
+                            <li><a id="menu2" href="/member/About/">关于我们</a></li>
+                            <li><a id="menu3" href="/Member/About/about7.aspx">网站操作说明</a></li>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 hidden480 clearPaddingLeft clearPaddingRight">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default menuGroup" data-parent="#menu1" ng-if="UserInfo.isAdmin == 'false' && (UserInfo.isBuyer == 1 || UserInfo.isEmployee == 1)">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <img src="/member/Include/images/menu_ico1.jpg" />
+                                    买家中心
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <ul class="nav">
+                                    <li ng-if="UserInfo.isBuyer == 1"><a href="/member/Order/">● 我的订单</a></li>
+                                    <li ng-if="UserInfo.isBuyer == 1"><a href="/member/Transit/">● 我的在途气</a></li>
+                                    <li ng-if="UserInfo.isBuyer == 1"><a href="/member/Quote/">● 我的求购</a></li>
+                                    <li ng-if="UserInfo.isEmployee == 1"><a href="/member/OrderLogistics/">● 我的物流</a></li>
+                                    <li ng-if="UserInfo.isBuyer == 1"><a href="/member/MyFavorite/">● 我的关注</a></li>
+                                    <li ng-if="UserInfo.isBuyer == 1"><a href="/shopcart_step1.html">● 我的购物车</a></li>
+                                    <li ng-if="UserInfo.isBuyer == 1"><a href="/member/ClientAddress/">● 到岸地管理</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default menuGroup" data-parent="#menu1" ng-if="UserInfo.isAdmin == 'false' && UserInfo.isSeller == 1">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <img src="/member/Include/images/menu_ico3.jpg" />
+                                    卖家中心
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <ul class="nav">
+                                    <li><a href="/member/OrderSell/">● 已售订单</a></li>
+                                    <li><a href="/member/ProductSell/">● 出售中的气源</a></li>
+                                    <li><a href="/member/TransitSell/">● 出售中的在途气</a></li>
+                                    <li><a href="/member/Car/">● 车辆管理</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default menuGroup" data-parent="#menu1"  ng-if="UserInfo.isAdmin == 'false'">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <img src="/member/Include/images/menu_ico2.jpg" />
+                                    账户中心
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <ul class="nav">
+                                    <li ng-if="UserInfo.isCompany == 1"><a href="/Member/Users/ClientInfo.aspx">● 企业认证</a></li>
+                                    <li><a href="/Member/users/PersonalInfo.aspx">● 账户信息</a></li>
+                                    <li><a href="/Member/users/BindingPhone_InitPage.aspx">● 帐号安全</a></li>
+<%--                                    <li><a href="/member/RewardPoint/">● 积分管理</a></li>--%>
+                                    <li><a href="/member/Message/">● 我的消息</a></li>
+                                    <li ng-if="UserInfo.isCompanyAdmin == 1"><a href="/Member/Account/">● 公司人员管理</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default menuGroup" data-parent="#menu1" runat="server" id="adminPanel" ng-if="UserInfo.isAdmin == 'true'">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    <img src="/member/Include/images/menu_ico3.jpg" />
+                                    管理中心
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <ul class="nav">
+                                    <li><a href="/member/Users/">● 用户管理</a></li>
+                                    <li><a href="/member/Client/">● 企业审核</a></li>
+                                    <li><a href="/member/QuoteCheck/">● 求购发布审核</a></li>
+                                    <li><a href="/member/TransitCheck/">● 在途气审核</a></li>
+                                    <li><a href="/member/MarketData/">● 行情数据</a></li>
+                                    <li><a href="/member/MarketInformation/">● 行业资讯</a></li>
+                                    <li><a href="/member/Advertisement/SetAdvertisement.aspx">● 广告位设置</a></li>
+                                    <li><a href="/member/About/management.aspx">● About页面设置</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default menuGroup menuTop" data-parent="#menu2">
+                        <div class="panel-heading" role="tab" id="headingFour" style="background-color: #ff6400;">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    <img src="../Include/images/menu_ico4.gif" />
+                                    <span style="color: white;">关于我们</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <ul class="nav">
+                                    <li><a href="/Member/About/" data-parent="#menu2">企业简介</a></li>
+                                    <li><a href="/Member/About/about2.aspx" data-parent="#menu2">企业文化</a></li>
+                                    <%--<li><a href="/Member/About/about3.aspx" data-parent="#menu2">企业愿景</a></li>--%>
+                                    <li><a href="/Member/About/about4.aspx" data-parent="#menu2">联系我们</a></li>
+                                    <li><a href="/Member/About/about5.aspx" data-parent="#menu2">友情链接</a></li>
+                                    <li><a href="/Member/About/about6.aspx" data-parent="#menu2">法律声明</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default menuGroup menuTop" data-parent="#menu3">
+                        <div class="panel-heading" role="tab" id="headingFive">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">网站操作说明
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="panel-body">
+                                <ul class="nav">
+                                    <li><a href="/Member/About/about7.aspx" data-parent="#menu3">现货搜索</a></li>
+                                    <li><a href="/Member/About/about8.aspx" data-parent="#menu3">求购报价</a></li>
+                                    <li><a href="/Member/About/about9.aspx" data-parent="#menu3">交易指南</a></li>
+                                    <li><a href="/Member/About/about10.aspx" data-parent="#menu3">常见问题</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="mainBody" class="col-md-10">
+                <form id="frmMain" method="post" enctype="multipart/form-data" novalidate="novalidate" runat="server">
+                    <ajaxToolkit:ToolkitScriptManager ID="mgrAjax"
+                        CombineScripts="true"
+                        EnableScriptGlobalization="true"
+                        EnableScriptLocalization="false"
+                        ScriptMode="Release"
+                        runat="server" />
+
+                    <script type="text/javascript">
+                        $(function () {
+                            $("table.listView").attr("rules", "none");
+                        });
+                    </script>
+
+                    <asp:ContentPlaceHolder ID="cntUnifiedSearch" Visible="false" runat="server" />
+                    <asp:ContentPlaceHolder ID="cntLastViewed" Visible="false" runat="server" />
+                    <asp:ContentPlaceHolder ID="cntSidebar" Visible="false" runat="server" />
+
+                    <asp:ContentPlaceHolder ID="cntBody" runat="server" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer" style="height: auto; padding-top: 0px;">
+        <div class="container">
+
+            <div class="foot_txt">
+            <div class="textCenter2">
+                <a href="/Member/About/about6.aspx" data-parent="#menu2">法律声明</a>
+                &nbsp;| &nbsp;<a>诚招英才</a>
+                &nbsp;| &nbsp;<a href="/Member/About/about4.aspx" data-parent="#menu2">联系我们</a>
+                &nbsp;| &nbsp;<a href="/Member/About/about5.aspx" data-parent="#menu2">友情链接</a>
+            </div>
+                <div class="textCenter2">
+                    COPYRIGHT &copy; www.517taoqi.com 京ICP备15058548号
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <Taoqi:Copyright ID="ctlCopyright" Visible="false" runat="Server" />
+
+        <asp:PlaceHolder ID="plcMenuPopups" runat="server" />
+        <script type="text/javascript" src="<%# Application["scriptURL"] %>UpdatePanelWaitCursor.js"></script>
+
+
+
+        <script>
+            var pathName = (window.location.pathname + window.location.search).toLowerCase();
+            var parentMenu = "#menu1";
+
+            $(".panel-body > .nav > li >a").each(function (index, item) {
+                var url = $(item).attr("href").toLowerCase();
+                if (url == pathName) {
+                    $(item).addClass("active");
+                    if ($(item).attr("data-parent")) {
+                        parentMenu = $(item).attr("data-parent");
+                    }
+                }
+            });
+
+            $(parentMenu).css("background-color", "#ff6400");
+            $(".menuGroup").each(function (indexGroup, itemGroup) {
+                if ($(itemGroup).attr("data-parent") == parentMenu) {
+                    $(itemGroup).addClass("active");
+                }
+                else {
+                    $(itemGroup).removeClass("active");
+                }
+            })
+        </script>
+
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
